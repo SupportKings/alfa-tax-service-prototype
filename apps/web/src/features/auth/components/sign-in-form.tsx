@@ -15,6 +15,8 @@ import {
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/ui/logo";
 
+import { prototypeSignIn } from "@/features/auth/actions/prototypeSignIn";
+
 import { siteConfig } from "@/siteConfig";
 
 import { useForm } from "@tanstack/react-form";
@@ -129,40 +131,9 @@ export function SignInForm({ redirectTo = "/" }: SignInFormProps) {
 				return;
 			}
 
-			// Handle email OTP authentication
-			setIsLoading(true);
-			try {
-				await authClient.emailOtp.sendVerificationOtp(
-					{
-						email: value.email,
-						type: "sign-in",
-					},
-					{
-						onSuccess: () => {
-							setEmail(value.email);
-							setStep("otp");
-							setResendDisabled(true);
-							setCountdown(30);
-						},
-						onError: (error) => {
-							// Handle the case where user doesn't exist (Better Auth beta throws USER_NOT_FOUND)
-							console.log("error", error);
-							if (error.error.code === "USER_NOT_FOUND") {
-								setEmail(value.email);
-								setStep("otp");
-								setResendDisabled(true);
-								setCountdown(30);
-							} else {
-								setEmailError(
-									error.error.message || "Failed to send verification code",
-								);
-							}
-						},
-					},
-				);
-			} finally {
-				setIsLoading(false);
-			}
+			// Prototype: skip real OTP sending, go straight to code entry
+			setEmail(value.email);
+			setStep("otp");
 		},
 		validators: {
 			onSubmit: emailSchema,
@@ -170,60 +141,27 @@ export function SignInForm({ redirectTo = "/" }: SignInFormProps) {
 	});
 
 	const handleVerifyOtp = async () => {
-		if (!otp || otp.length !== 6) {
+		if (!otp) {
 			return;
 		}
 
 		setIsLoading(true);
 		try {
-			await authClient.signIn.emailOtp(
-				{
-					email: email,
-					otp: otp,
-				},
-				{
-					onSuccess: () => {
-						// We wrap our navigate in a setTimeout 0. This forces the code to run on the next tick,
-						// which protects us against some edge cases where you are signed in but the cookie isn't set yet
-						// causing you to bounce between routes over and over.
-						// https://x.com/IzakFilmalter/status/1929865024366948690
-						setTimeout(() => {
-							router.push(redirectTo);
-						}, 0);
-						// Don't set isLoading to false here - keep the loading state during redirect
-						/*             toast.success("Sign in successful");
-						 */
-					},
-					onError: (error) => {
-						toast.error(error.error.message || "Invalid code");
-						setIsLoading(false); // Only stop loading on error
-					},
-				},
-			);
+			// Prototype: any code accepted, cookie-based session
+			await prototypeSignIn({ email });
+			router.push("/dashboard");
 		} catch (error) {
 			const message =
-				error instanceof Error ? error.message : "Failed to verify code";
+				error instanceof Error ? error.message : "Failed to sign in";
 			toast.error(message);
-			setIsLoading(false); // Only stop loading on error
+			setIsLoading(false);
 		}
 	};
 
 	const handleResendCode = async () => {
-		setIsLoading(true);
-		try {
-			await authClient.emailOtp.sendVerificationOtp({
-				email: email,
-				type: "sign-in",
-			});
-			setResendDisabled(true);
-			setCountdown(30);
-		} catch (error) {
-			const message =
-				error instanceof Error ? error.message : "Failed to resend code";
-			toast.error(message);
-		} finally {
-			setIsLoading(false);
-		}
+		// Prototype: no real OTP to resend, just reset the cooldown UI
+		setResendDisabled(true);
+		setCountdown(30);
 	};
 
 	const handlePasskeySignIn = () => {
@@ -444,7 +382,7 @@ export function SignInForm({ redirectTo = "/" }: SignInFormProps) {
 										<Button
 											type="button"
 											onClick={handleVerifyOtp}
-											disabled={isLoading || otp.length !== 6}
+											disabled={isLoading || !otp}
 											className={commonButtonClassName}
 										>
 											{isLoading ? (

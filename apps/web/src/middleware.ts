@@ -11,7 +11,9 @@ export async function middleware(request: NextRequest) {
 		}
 	}
 
-	const sessionCookie = getSessionCookie(request);
+	// Prototype bypass - treat PROTOTYPE_SESSION cookie as an active session
+	const prototypeCookie = request.cookies.get("PROTOTYPE_SESSION");
+	const sessionCookie = prototypeCookie || getSessionCookie(request);
 	const isHomePage = request.nextUrl.pathname === "/";
 	const isDashboardPage = request.nextUrl.pathname.startsWith("/dashboard");
 

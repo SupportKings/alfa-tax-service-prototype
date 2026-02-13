@@ -11,6 +11,7 @@ export function NavMain({
 		name: string;
 		url: string;
 		icon: LucideIcon;
+		badge?: string;
 	}[];
 }) {
 	return (
@@ -22,6 +23,7 @@ export function NavMain({
 						href={item.url}
 						label={item.name}
 						icon={<item.icon size={16} />}
+						badge={item.badge}
 					/>
 				);
 			})}

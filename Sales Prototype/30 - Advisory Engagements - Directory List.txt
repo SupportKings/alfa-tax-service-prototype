@@ -1,0 +1,86 @@
+<!-- =========================
+     ADVISORY ENGAGEMENTS - DIRECTORY LIST VIEW
+     ========================= -->
+
+<!-- Page Summary for Advisory Engagements
+List Fields:
+– engagement_number
+– company_id (lookup to companies.full_name)
+– engagement_type_category_id
+– status_category_id
+– amount
+– billing_type_category_id
+– implementation_offered
+
+KPIs (prototype):
+– Open Tasks: Engagements not yet Complete
+– Status: Distribution across engagement stages
+– Trends: Advisory revenue per quarter
+-->
+
+<!-- Process Remarks
+Kathy's growth offer pipeline. See all advisory work — filter by type to manage Tax Plans vs Financial Management retainers, by status to find engagements needing attention, by billing type for revenue planning.
+-->
+
+<page name="advisory_engagementsList" layout="DirectoryList" displayName="Advisory Engagements">
+
+  <kpis>
+    <kpi id="advisory_engagements_open_tasks_1"
+         name="Active Engagements (Not Complete)"
+         type="Incomplete Task Count"
+         displayType="Single Value"
+         axesSummary="none"
+         version="PROTOTYPE" />
+  </kpis>
+
+  <kpis>
+    <kpi id="advisory_engagements_status_1"
+         name="Engagement Stage Distribution"
+         type="Status Value"
+         displayType="Single Value"
+         axesSummary="none"
+         version="PROTOTYPE" />
+  </kpis>
+
+  <kpis>
+    <kpi id="advisory_engagements_trend_1"
+         name="Advisory Revenue Over Time"
+         type="Trend"
+         displayType="Line Chart"
+         axesSummary="Quarter vs Total Advisory Revenue"
+         version="PROTOTYPE" />
+  </kpis>
+
+  <component
+    name="advisory_engagementsList"
+    layout="ListView"
+    table_id="advisory_engagements"
+    createButton="VISIBLE"
+    editType="DETAILS"
+  >
+    <field id="engagement_number" displayName="Engagement #" displayType="Text" tooltip="Unique engagement reference" />
+    <field id="company_id" displayName="Client" enableInlineEdit="FALSE" tooltip="Which client this engagement is for">
+      <lookup>
+        <ref table_id="companies" field_id="full_name" />
+      </lookup>
+    </field>
+    <field id="engagement_type_category_id" displayName="Type" displayType="SingleSelect" tooltip="Tax Plan, Financial Management, Hourly, etc." />
+    <field id="status_category_id" displayName="Status" displayType="SingleSelect" tooltip="Current engagement stage" />
+    <field id="amount" displayName="Fee" displayType="Currency" tooltip="Engagement fee" />
+    <field id="billing_type_category_id" displayName="Billing" displayType="SingleSelect" tooltip="One-Time, Hourly, or Annual" />
+    <field id="implementation_offered" displayName="Implementation?" displayType="SingleSelect" tooltip="Whether Kathy offered to implement the advice" />
+
+    <rowSnapshots>
+      <snapshot id="advisory_engagements_row_snapshot_1"
+                name="Engagement Progress"
+                type="Row Snapshot"
+                displayType="Row Snapshot"
+                show_delta="TRUE"
+                delta_window="WoW"
+                version="PROTOTYPE" />
+    </rowSnapshots>
+
+    <!-- Optional list fields -->
+    <!-- <field id="hourly_rate" displayName="Hourly Rate" displayType="Currency" tooltip="Rate for hourly engagements" /> -->
+  </component>
+</page>

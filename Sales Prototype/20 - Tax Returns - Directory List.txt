@@ -1,0 +1,90 @@
+<!-- =========================
+     TAX RETURNS - DIRECTORY LIST VIEW
+     ========================= -->
+
+<!-- Page Summary for Tax Returns
+List Fields:
+– tax_return_number
+– company_id (lookup to companies.full_name)
+– tax_year
+– return_type_category_id
+– status_category_id
+– complexity_category_id
+– due_at
+– amount
+
+KPIs (prototype):
+– Open Tasks: Returns not yet at Complete status (1000)
+– Status: Distribution across workflow stages
+– Trends: Returns filed per month over time
+-->
+
+<!-- Process Remarks
+The highest-volume workflow — Kathy's primary pipeline view during tax season. Filter by status to find stuck returns, by complexity to route to the right preparer, by due date to catch upcoming deadlines.
+-->
+
+<page name="tax_returnsList" layout="DirectoryList" displayName="Tax Returns">
+
+  <kpis>
+    <kpi id="tax_returns_open_tasks_1"
+         name="Returns In Progress (Not Filed)"
+         type="Incomplete Task Count"
+         displayType="Single Value"
+         axesSummary="none"
+         version="PROTOTYPE" />
+  </kpis>
+
+  <kpis>
+    <kpi id="tax_returns_status_1"
+         name="Pipeline Stage Distribution"
+         type="Status Value"
+         displayType="Single Value"
+         axesSummary="none"
+         version="PROTOTYPE" />
+  </kpis>
+
+  <kpis>
+    <kpi id="tax_returns_trend_1"
+         name="Returns Completed Over Time"
+         type="Trend"
+         displayType="Line Chart"
+         axesSummary="Week vs Returns Reaching Complete Status"
+         version="PROTOTYPE" />
+  </kpis>
+
+  <component
+    name="tax_returnsList"
+    layout="ListView"
+    table_id="tax_returns"
+    createButton="VISIBLE"
+    editType="DETAILS"
+  >
+    <field id="tax_return_number" displayName="Return #" displayType="Text" tooltip="Unique return reference number" />
+    <field id="company_id" displayName="Client" enableInlineEdit="FALSE" tooltip="Which client this return belongs to">
+      <lookup>
+        <ref table_id="companies" field_id="full_name" />
+        <ref table_id="companies" field_id="client_type_category_id" />
+      </lookup>
+    </field>
+    <field id="tax_year" displayName="Tax Year" displayType="Integer" tooltip="Filing year" />
+    <field id="return_type_category_id" displayName="Type" displayType="SingleSelect" tooltip="Individual, Business, Sales Tax, or Amended" />
+    <field id="status_category_id" displayName="Status" displayType="SingleSelect" tooltip="Current workflow stage" />
+    <field id="complexity_category_id" displayName="Complexity" displayType="SingleSelect" tooltip="Simple, Standard, or Complex — determines routing" />
+    <field id="due_at" displayName="Due Date" displayType="DateTime" tooltip="Filing deadline" />
+    <field id="amount" displayName="Fee" displayType="Currency" tooltip="Amount charged for this return" />
+
+    <rowSnapshots>
+      <snapshot id="tax_returns_row_snapshot_1"
+                name="Documents & Assignments"
+                type="Row Snapshot"
+                displayType="Row Snapshot"
+                show_delta="TRUE"
+                delta_window="WoW"
+                version="PROTOTYPE" />
+    </rowSnapshots>
+
+    <!-- Optional list fields -->
+    <!-- <field id="intake_method_category_id" displayName="Intake Method" displayType="SingleSelect" tooltip="In-Person or Virtual" /> -->
+    <!-- <field id="payment_received_at" displayName="Payment Date" displayType="DateTime" tooltip="When payment was received" /> -->
+  </component>
+</page>

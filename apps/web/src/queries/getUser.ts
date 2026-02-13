@@ -43,6 +43,25 @@ export const getUser = async () => {
 		}
 	}
 
+	// Prototype bypass - return mock session from PROTOTYPE_SESSION cookie
+	const cookieStore = await cookies();
+	const prototypeEmail = cookieStore.get("PROTOTYPE_SESSION")?.value;
+	if (prototypeEmail) {
+		return {
+			...e2eMockSession,
+			user: {
+				...e2eMockSession.user,
+				id: `prototype-${prototypeEmail}`,
+				name: prototypeEmail.split("@")[0],
+				email: prototypeEmail,
+			},
+			session: {
+				...e2eMockSession.session,
+				userId: `prototype-${prototypeEmail}`,
+			},
+		};
+	}
+
 	const session = await auth.api.getSession({
 		headers: await headers(),
 	});

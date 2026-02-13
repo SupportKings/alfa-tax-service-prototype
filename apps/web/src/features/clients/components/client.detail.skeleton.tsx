@@ -7,17 +7,20 @@ import MainLayout from "@/components/layout/main-layout";
 import ClientDetailHeader from "../layout/client.detail.header";
 
 interface ClientDetailSkeletonProps {
-	clientId: string;
+	clientName?: string;
 }
 
 export default function ClientDetailSkeleton({
-	clientId,
+	clientName,
 }: ClientDetailSkeletonProps) {
 	const id = useId();
 	return (
 		<MainLayout
 			headers={[
-				<ClientDetailHeader key="client-detail-header" clientId={clientId} />,
+				<ClientDetailHeader
+					key="client-detail-header"
+					clientName={clientName || "Loading..."}
+				/>,
 			]}
 		>
 			<div className="animate-pulse space-y-6 p-6">

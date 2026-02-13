@@ -100,10 +100,12 @@ export function SidebarItemComponent({
 	href,
 	label,
 	icon,
+	badge,
 }: {
 	href: string;
 	label: string;
 	icon: React.ReactNode;
+	badge?: string;
 }) {
 	const pathname = usePathname();
 	const isActive = pathname === href;
@@ -152,6 +154,11 @@ export function SidebarItemComponent({
 												{icon}
 											</span>
 											{label}
+											{badge && (
+												<span className="ml-auto rounded bg-muted px-1.5 py-0.5 font-normal text-[10px] text-muted-foreground">
+													{badge}
+												</span>
+											)}
 										</span>
 									</Link>
 								</div>

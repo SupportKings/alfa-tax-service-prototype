@@ -1,0 +1,142 @@
+<!-- =========================
+     TAX RETURNS – DETAILS PAGE
+     ========================= -->
+
+<!-- Page Summary for Tax Return
+Fields:
+
+Return Details
+– tax_return_number
+– company_id
+– contact_id
+– tax_year
+– return_type_category_id
+
+Workflow & Tracking
+– status_category_id
+– complexity_category_id
+– intake_method_category_id
+– due_at
+
+Billing & Protection
+– amount
+– payment_received_at
+– has_audit_protection
+– has_identity_protection
+
+Internal
+– internal_notes
+
+Child Tables:
+– client_documents: Documents required/received for this return
+– account_assignments: Team members working on this return
+-->
+
+<!-- Process Remarks
+Track an individual return through the full lifecycle: intake to data entry to prep to review to client sign to e-file. See who is assigned at each stage, which documents have been received vs. missing, and whether the client has paid.
+-->
+
+<!-- Navigation Path
+Tax Returns List → Tax Return Detail
+OR Clients List → Client Detail → Tax Returns Tab → Tax Return Detail
+-->
+
+<page
+  name="tax_returnsDetails"
+  layout="Details"
+  displayName="Tax Return Detail"
+  mainFieldIDs="tax_return_number,company_id.full_name"
+>
+
+  <pageSection
+    name="tax_returns_main_fields"
+    layout="fields"
+    table_id="tax_returns"
+  >
+    <subSection name="return_details" displayName="Return Details">
+      <field id="tax_return_number" displayName="Return #" displayType="Text" tooltip="Auto-generated reference number" />
+      <field id="company_id" displayName="Client" tooltip="Which client this return is for">
+        <lookup enableInlineCreate="FALSE">
+          <ref table_id="companies" field_id="full_name" />
+          <ref table_id="companies" field_id="client_type_category_id" />
+        </lookup>
+      </field>
+      <field id="contact_id" displayName="Contact" tooltip="Specific person this return is for">
+        <lookup enableInlineCreate="FALSE">
+          <ref table_id="contacts" field_id="full_name" />
+          <ref table_id="contacts" field_id="role" />
+        </lookup>
+      </field>
+      <field id="tax_year" displayName="Tax Year" displayType="Integer" tooltip="Filing year" />
+      <field id="return_type_category_id" displayName="Return Type" displayType="SingleSelect" tooltip="Individual, Business, Sales Tax, or Amended" />
+    </subSection>
+
+    <subSection name="workflow_tracking" displayName="Workflow & Tracking">
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" tooltip="Current stage in the return lifecycle" />
+      <field id="complexity_category_id" displayName="Complexity" displayType="SingleSelect" tooltip="Determines routing — simple to junior staff, complex to Kathy" />
+      <field id="intake_method_category_id" displayName="Intake Method" displayType="SingleSelect" tooltip="How documents were received — In-Person or Virtual/TaxDome" />
+      <field id="due_at" displayName="Due Date" displayType="DateTime" tooltip="Filing deadline — April 15, October 15, or quarterly" />
+    </subSection>
+
+    <subSection name="billing_protection" displayName="Billing & Protection">
+      <field id="amount" displayName="Fee" displayType="Currency" tooltip="Amount charged for this return" />
+      <field id="payment_received_at" displayName="Payment Received" displayType="DateTime" tooltip="When deposit or payment was received — can happen at any stage" />
+      <field id="has_audit_protection" displayName="Audit Protection" displayType="SingleSelect" tooltip="Client purchased audit/IRS defense coverage" />
+      <field id="has_identity_protection" displayName="Identity Protection" displayType="SingleSelect" tooltip="Client purchased identity theft protection" />
+    </subSection>
+
+    <subSection name="internal" displayName="Internal">
+      <field id="internal_notes" displayName="Internal Notes" displayType="Text" tooltip="Private notes about this return" />
+    </subSection>
+  </pageSection>
+
+  <pageSection type="metrics" name="Metrics">
+    <kpi id="tax_returns_detail_kpi_1"
+         name="Days in Current Status"
+         type="Trend"
+         displayType="Line Chart"
+         axesSummary="Status vs Average Days Spent"
+         version="PROTOTYPE" />
+    <kpi id="tax_returns_detail_kpi_2"
+         name="Document Completion Rate"
+         type="Trend"
+         displayType="Bar Chart"
+         axesSummary="Document Type vs Status (Verified vs Pending)"
+         version="PROTOTYPE" />
+  </pageSection>
+
+  <!-- Child Tab: Documents -->
+  <pageSection name="tax_returns_child_tab_client_documents" layout="child_tab" displayName="Documents">
+    <component name="client_documents_list" layout="ListView" table_id="client_documents" createButton="VISIBLE" editType="MODAL">
+      <field id="document_type_category_id" displayName="Document Type" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="W-2, 1099, Prior Year Return, Consent Form, etc." />
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Not Requested to Requested to Submitted to Verified" />
+      <field id="tax_year" displayName="Tax Year" displayType="Integer" enableInlineEdit="TRUE" tooltip="Which year this doc covers" />
+      <field id="file_url" displayName="File" displayType="URL" enableInlineEdit="TRUE" tooltip="Link to document in TaxDome" />
+    </component>
+    <page name="client_documentsChildForm" layout="Create" table_id="client_documents" displayName="Add Document">
+      <field id="company_id" displayName="Client" tooltip="Auto-prefilled from parent" prefilledFromParent="true">
+        <lookup enableInlineCreate="FALSE">
+          <ref table_id="companies" field_id="full_name" />
+        </lookup>
+      </field>
+      <field id="document_type_category_id" displayName="Document Type" displayType="SingleSelect" tooltip="Type of document being tracked" />
+      <field id="tax_year" displayName="Tax Year" displayType="Integer" tooltip="Which year this document covers" />
+      <field id="file_url" displayName="File URL" displayType="URL" tooltip="Link to uploaded document" />
+      <field id="internal_notes" displayName="Notes" displayType="Text" tooltip="Notes about this document" />
+    </page>
+  </pageSection>
+
+  <!-- Child Tab: Assignments -->
+  <pageSection name="tax_returns_child_tab_account_assignments" layout="child_tab" displayName="Team">
+    <component name="account_assignments_list" layout="ListView" table_id="account_assignments" createButton="VISIBLE" editType="MODAL">
+      <field id="team_member_id" displayName="Team Member" enableInlineEdit="TRUE" tooltip="Assigned team member">
+        <lookup>
+          <ref table_id="internal_team" field_id="full_name" />
+          <ref table_id="internal_team" field_id="job_title" />
+        </lookup>
+      </field>
+      <field id="assignment_type_category_id" displayName="Role" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Data Entry, Preparer, Reviewer, etc." />
+    </component>
+  </pageSection>
+
+</page>

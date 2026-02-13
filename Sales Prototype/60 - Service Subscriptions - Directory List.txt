@@ -1,0 +1,90 @@
+<!-- =========================
+     COMPANY PURCHASES - DIRECTORY LIST VIEW
+     ========================= -->
+
+<!-- Page Summary for Service Subscriptions
+List Fields:
+– company_id (lookup to companies.full_name)
+– offer_id (lookup to offers.name)
+– status_category_id
+– price
+– service_frequency_category_id
+– start_date
+
+KPIs (prototype):
+– Open Tasks: Subscriptions with status = Active - Behind
+– Status: Distribution of Active Current vs Active Behind vs Paused
+– Trends: Monthly recurring revenue from subscriptions over time
+-->
+
+<!-- Process Remarks
+Where Kathy finds her bookkeeping clients and monitors which ones are behind on their monthly/quarterly cycle. Filter by offer type = Bookkeeping + status = Active - Behind to instantly see problem clients. Also shows Financial Management retainers and other recurring services.
+-->
+
+<page name="company_purchasesList" layout="DirectoryList" displayName="Service Subscriptions">
+
+  <kpis>
+    <kpi id="company_purchases_open_tasks_1"
+         name="Services Behind Schedule"
+         type="Incomplete Task Count"
+         displayType="Single Value"
+         axesSummary="none"
+         version="PROTOTYPE" />
+  </kpis>
+
+  <kpis>
+    <kpi id="company_purchases_status_1"
+         name="Service Health Overview"
+         type="Status Value"
+         displayType="Single Value"
+         axesSummary="none"
+         version="PROTOTYPE" />
+  </kpis>
+
+  <kpis>
+    <kpi id="company_purchases_trend_1"
+         name="Recurring Revenue Over Time"
+         type="Trend"
+         displayType="Line Chart"
+         axesSummary="Month vs Total Active Subscription Revenue"
+         version="PROTOTYPE" />
+  </kpis>
+
+  <component
+    name="company_purchasesList"
+    layout="ListView"
+    table_id="company_purchases"
+    createButton="VISIBLE"
+    editType="MODAL"
+  >
+    <field id="company_id" displayName="Client" enableInlineEdit="FALSE" tooltip="Which client has this service">
+      <lookup>
+        <ref table_id="companies" field_id="full_name" />
+        <ref table_id="companies" field_id="client_type_category_id" />
+      </lookup>
+    </field>
+    <field id="offer_id" displayName="Service" enableInlineEdit="FALSE" tooltip="Which service offering">
+      <lookup>
+        <ref table_id="offers" field_id="name" />
+        <ref table_id="offers" field_id="offer_type_category_id" />
+      </lookup>
+    </field>
+    <field id="status_category_id" displayName="Status" displayType="SingleSelect" tooltip="Active - Current, Active - Behind, Paused, Cancelled, etc." />
+    <field id="price" displayName="Price" displayType="Currency" tooltip="What this client pays for this service" />
+    <field id="service_frequency_category_id" displayName="Frequency" displayType="SingleSelect" tooltip="Monthly, Quarterly, Annually" />
+    <field id="start_date" displayName="Start Date" displayType="DateOnly" tooltip="When this service began" />
+
+    <rowSnapshots>
+      <snapshot id="company_purchases_row_snapshot_1"
+                name="Payment & Activity History"
+                type="Row Snapshot"
+                displayType="Row Snapshot"
+                show_delta="TRUE"
+                delta_window="WoW"
+                version="PROTOTYPE" />
+    </rowSnapshots>
+
+    <!-- Optional list fields -->
+    <!-- <field id="end_date" displayName="End Date" displayType="DateOnly" tooltip="When service ends (null for ongoing)" /> -->
+  </component>
+</page>

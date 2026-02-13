@@ -1,0 +1,109 @@
+<!-- =========================
+     ADVISORY ENGAGEMENTS – DETAILS PAGE
+     ========================= -->
+
+<!-- Page Summary for Advisory Engagement
+Fields:
+
+Engagement Details
+– engagement_number
+– company_id
+– engagement_type_category_id
+– status_category_id
+
+Pricing
+– amount
+– billing_type_category_id
+– hourly_rate
+– implementation_offered
+
+Internal
+– internal_notes
+
+Child Tables:
+– client_documents: Tax returns, financial statements collected for analysis
+– account_assignments: Team assigned (typically Kathy)
+-->
+
+<!-- Process Remarks
+Track an advisory engagement from initial inquiry through engagement signing, document review, analysis, presentation, and implementation decision. Kathy uses this to manage her advisory pipeline.
+-->
+
+<!-- Navigation Path
+Advisory Engagements List → Advisory Engagement Detail
+OR Clients List → Client Detail → Advisory Tab → Advisory Engagement Detail
+-->
+
+<page
+  name="advisory_engagementsDetails"
+  layout="Details"
+  displayName="Advisory Engagement Detail"
+  mainFieldIDs="engagement_number,company_id.full_name"
+>
+
+  <pageSection
+    name="advisory_engagements_main_fields"
+    layout="fields"
+    table_id="advisory_engagements"
+  >
+    <subSection name="engagement_details" displayName="Engagement Details">
+      <field id="engagement_number" displayName="Engagement #" displayType="Text" tooltip="Auto-generated reference number" />
+      <field id="company_id" displayName="Client" tooltip="Which client this engagement is for">
+        <lookup enableInlineCreate="FALSE">
+          <ref table_id="companies" field_id="full_name" />
+        </lookup>
+      </field>
+      <field id="engagement_type_category_id" displayName="Engagement Type" displayType="SingleSelect" tooltip="Tax Plan, Tax Plan + Books, Financial Management, Advisory Hourly, Ad-Hoc" />
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" tooltip="Current stage in the engagement lifecycle" />
+    </subSection>
+
+    <subSection name="pricing" displayName="Pricing & Billing">
+      <field id="amount" displayName="Fee" displayType="Currency" tooltip="Engagement fee — $2,500 tax plan, $5,000 plan+books, $10-30K financial management" />
+      <field id="billing_type_category_id" displayName="Billing Type" displayType="SingleSelect" tooltip="One-Time, Hourly, or Annual" />
+      <field id="hourly_rate" displayName="Hourly Rate" displayType="Currency" tooltip="$150/hr individual, $250/hr business — only for hourly engagements" />
+      <field id="implementation_offered" displayName="Implementation Offered?" displayType="SingleSelect" tooltip="Did Kathy offer to implement the advice? (80% of the time she does not)" />
+    </subSection>
+
+    <subSection name="internal" displayName="Internal">
+      <field id="internal_notes" displayName="Internal Notes" displayType="Text" tooltip="Private notes — analysis findings, recommendations, client goals" />
+    </subSection>
+  </pageSection>
+
+  <pageSection type="metrics" name="Metrics">
+    <kpi id="advisory_engagements_detail_kpi_1"
+         name="Engagement Duration (Days)"
+         type="Trend"
+         displayType="Line Chart"
+         axesSummary="Engagement Type vs Average Days to Complete"
+         version="PROTOTYPE" />
+    <kpi id="advisory_engagements_detail_kpi_2"
+         name="Revenue by Engagement Type"
+         type="Trend"
+         displayType="Bar Chart"
+         axesSummary="Engagement Type vs Total Revenue"
+         version="PROTOTYPE" />
+  </pageSection>
+
+  <!-- Child Tab: Documents -->
+  <pageSection name="advisory_engagements_child_tab_client_documents" layout="child_tab" displayName="Documents">
+    <component name="client_documents_list" layout="ListView" table_id="client_documents" createButton="VISIBLE" editType="MODAL">
+      <field id="document_type_category_id" displayName="Document Type" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Tax Return, Income Statement, Balance Sheet, Profit/Loss" />
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Not Requested to Requested to Submitted to Verified" />
+      <field id="file_url" displayName="File" displayType="URL" enableInlineEdit="TRUE" tooltip="Link to document" />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Assignments -->
+  <pageSection name="advisory_engagements_child_tab_account_assignments" layout="child_tab" displayName="Team">
+    <component name="account_assignments_list" layout="ListView" table_id="account_assignments" createButton="VISIBLE" editType="MODAL">
+      <field id="team_member_id" displayName="Team Member" enableInlineEdit="TRUE" tooltip="Assigned team member">
+        <lookup>
+          <ref table_id="internal_team" field_id="full_name" />
+          <ref table_id="internal_team" field_id="job_title" />
+        </lookup>
+      </field>
+      <field id="assignment_type_category_id" displayName="Role" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Owner, Reviewer, etc." />
+    </component>
+  </pageSection>
+
+</page>

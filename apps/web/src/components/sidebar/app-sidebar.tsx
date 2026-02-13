@@ -21,7 +21,14 @@ import {
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-import { ArrowLeft, InboxIcon, Users } from "lucide-react";
+import {
+	ArrowLeft,
+	Briefcase,
+	FileText,
+	InboxIcon,
+	LayoutDashboard,
+	Users,
+} from "lucide-react";
 import AppBranding from "./app-branding";
 import { NavMain } from "./nav-main";
 import { SidebarItemComponent } from "./sidebar-item";
@@ -85,6 +92,19 @@ export function AppSidebar({
 
 	// Navigation data with full structure
 	const data = {
+		mainNav: [
+			{
+				name: "Dashboard",
+				url: "/dashboard",
+				icon: LayoutDashboard,
+			},
+			{
+				name: "Inbox",
+				url: "/dashboard/inbox",
+				icon: InboxIcon,
+				badge: "Soon",
+			},
+		],
 		navMain: [
 			{
 				title: "Clients",
@@ -97,12 +117,39 @@ export function AppSidebar({
 					},
 				],
 			},
-		],
-		mainNav: [
 			{
-				name: "Inbox",
-				url: "/dashboard",
-				icon: InboxIcon,
+				title: "Tax Season",
+				url: "#",
+				icon: FileText,
+				items: [
+					{
+						title: "Tax Returns",
+						url: "/dashboard/tax-returns",
+					},
+					{
+						title: "Requests",
+						url: "/dashboard/requests",
+					},
+				],
+			},
+			{
+				title: "Services",
+				url: "#",
+				icon: Briefcase,
+				items: [
+					{
+						title: "Advisory",
+						url: "/dashboard/advisory",
+					},
+					{
+						title: "Formations",
+						url: "/dashboard/formations",
+					},
+					{
+						title: "Subscriptions",
+						url: "/dashboard/subscriptions",
+					},
+				],
 			},
 		],
 	};

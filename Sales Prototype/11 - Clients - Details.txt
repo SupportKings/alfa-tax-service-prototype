@@ -1,0 +1,253 @@
+<!-- =========================
+     COMPANIES – DETAILS PAGE
+     ========================= -->
+
+<!-- Page Summary for Client
+Fields:
+
+Client Information
+– full_name
+– email
+– phone
+– client_type_category_id
+– language_preference_category_id
+– source_category_id
+
+Business Details
+– industry_category_id
+– legal_structure_category_id
+– state_of_incorporation
+– date_of_incorporation
+– website
+– tax_id_ein
+– state_tax_id
+– registered_agent
+
+Internal
+– status_category_id
+– quality_category_id
+– internal_notes
+
+Child Tables:
+– contacts: People at this client
+– tax_returns: All tax return filings
+– advisory_engagements: Advisory work
+– business_formations: Entity formations
+– company_purchases: Active service subscriptions
+– client_documents: All documents collected
+– tool_accesses: Which tools this client uses
+– payments: Payment history
+– touchpoints: Communication history
+– account_assignments: Team members assigned
+– requests: Open requests
+-->
+
+<!-- Process Remarks
+The everything about this client hub. Kathy can see all services, returns, advisory work, documents, tool logins, and team assignments in one place.
+-->
+
+<!-- Navigation Path
+Clients List → Client Detail
+-->
+
+<page
+  name="companiesDetails"
+  layout="Details"
+  displayName="Client Detail"
+  mainFieldIDs="full_name,status_category_id"
+>
+
+  <pageSection
+    name="companies_main_fields"
+    layout="fields"
+    table_id="companies"
+  >
+    <subSection name="client_info" displayName="Client Information">
+      <field id="full_name" displayName="Client Name" displayType="Text" tooltip="Person or business name" />
+      <field id="email" displayName="Email" displayType="Email" tooltip="Primary contact email" />
+      <field id="phone" displayName="Phone" displayType="Phone" tooltip="Primary contact number" />
+      <field id="client_type_category_id" displayName="Type" displayType="SingleSelect" tooltip="Individual or Business" />
+      <field id="language_preference_category_id" displayName="Language" displayType="SingleSelect" tooltip="Preferred communication language" />
+      <field id="source_category_id" displayName="Source" displayType="SingleSelect" tooltip="How this client found Alfa Tax" />
+    </subSection>
+
+    <subSection name="business_details" displayName="Business Details">
+      <field id="industry_category_id" displayName="Industry" displayType="SingleSelect" tooltip="Client business industry (if applicable)" />
+      <field id="legal_structure_category_id" displayName="Legal Structure" displayType="SingleSelect" tooltip="LLC, S-Corp, C-Corp, etc." />
+      <field id="state_of_incorporation" displayName="State of Incorporation" displayType="Text" tooltip="State where business is registered" />
+      <field id="date_of_incorporation" displayName="Date of Incorporation" displayType="DateOnly" tooltip="When the business was formally established" />
+      <field id="website" displayName="Website" displayType="URL" tooltip="Client website" />
+      <field id="tax_id_ein" displayName="EIN" displayType="Text" tooltip="Federal Employer Identification Number (sensitive)" />
+      <field id="state_tax_id" displayName="State Tax ID" displayType="Text" tooltip="State tax identification number (sensitive)" />
+      <field id="registered_agent" displayName="Registered Agent" displayType="Text" tooltip="Registered agent for the business entity" />
+    </subSection>
+
+    <subSection name="internal" displayName="Status & Internal">
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" tooltip="Current client relationship status" />
+      <field id="quality_category_id" displayName="Quality Rating" displayType="SingleSelect" tooltip="Internal rating — responsiveness and ease of work" />
+      <field id="internal_notes" displayName="Internal Notes" displayType="Text" tooltip="Private notes about this client" />
+    </subSection>
+  </pageSection>
+
+  <!-- PROTOTYPE: Metrics -->
+  <pageSection type="metrics" name="Metrics">
+    <kpi id="companies_detail_kpi_1"
+         name="Revenue from Client (All Services)"
+         type="Trend"
+         displayType="Line Chart"
+         axesSummary="Quarter vs Total Payments Received"
+         version="PROTOTYPE" />
+    <kpi id="companies_detail_kpi_2"
+         name="Active Services Breakdown"
+         type="Trend"
+         displayType="Bar Chart"
+         axesSummary="Offer Type vs Count of Active Purchases"
+         version="PROTOTYPE" />
+  </pageSection>
+
+  <!-- Child Tab: Contacts -->
+  <pageSection name="companies_child_tab_contacts" layout="child_tab" displayName="Contacts">
+    <component name="contacts_list" layout="ListView" table_id="contacts" createButton="VISIBLE" editType="MODAL">
+      <field id="full_name" displayName="Name" displayType="Text" enableInlineEdit="TRUE" tooltip="Contact full name" />
+      <field id="role" displayName="Role" displayType="Text" enableInlineEdit="TRUE" tooltip="Relationship to the client (Owner, Spouse, CFO, etc.)" />
+      <field id="phone" displayName="Phone" displayType="Phone" enableInlineEdit="TRUE" tooltip="Contact phone number" />
+      <field id="email" displayName="Email" displayType="Email" enableInlineEdit="TRUE" tooltip="Contact email address" />
+      <field id="is_primary" displayName="Primary?" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Is this the main point of contact?" />
+    </component>
+    <page name="contactsChildForm" layout="Create" table_id="contacts" displayName="Add Contact">
+      <field id="company_id" displayName="Client" tooltip="Auto-prefilled from parent" prefilledFromParent="true">
+        <lookup enableInlineCreate="FALSE">
+          <ref table_id="companies" field_id="full_name" />
+        </lookup>
+      </field>
+      <field id="full_name" displayName="Full Name" displayType="Text" tooltip="Contact full name" />
+      <field id="email" displayName="Email" displayType="Email" tooltip="Contact email" />
+      <field id="phone" displayName="Phone" displayType="Phone" tooltip="Contact phone" />
+      <field id="role" displayName="Role" displayType="Text" tooltip="Relationship to the client" />
+      <field id="is_primary" displayName="Primary Contact?" displayType="SingleSelect" tooltip="Main point of contact?" />
+      <field id="date_of_birth" displayName="Date of Birth" displayType="DateOnly" tooltip="Sensitive — restricted by permissions" />
+      <field id="ssn_last_four" displayName="SSN Last 4" displayType="Text" tooltip="Extremely sensitive — restricted by permissions" />
+    </page>
+  </pageSection>
+
+  <!-- Child Tab: Tax Returns -->
+  <pageSection name="companies_child_tab_tax_returns" layout="child_tab" displayName="Tax Returns">
+    <component name="tax_returns_list" layout="ListView" table_id="tax_returns" createButton="VISIBLE" editType="DETAILS">
+      <field id="tax_return_number" displayName="Return #" displayType="Text" enableInlineEdit="FALSE" tooltip="Unique return reference number" />
+      <field id="tax_year" displayName="Tax Year" displayType="Integer" enableInlineEdit="FALSE" tooltip="Filing year" />
+      <field id="return_type_category_id" displayName="Type" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Individual, Business, Sales Tax, or Amended" />
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Current workflow status" />
+      <field id="complexity_category_id" displayName="Complexity" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Simple, Standard, or Complex" />
+      <field id="due_at" displayName="Due Date" displayType="DateTime" enableInlineEdit="TRUE" tooltip="Filing deadline" />
+      <field id="amount" displayName="Fee" displayType="Currency" enableInlineEdit="TRUE" tooltip="Amount charged for this return" />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Advisory Engagements -->
+  <pageSection name="companies_child_tab_advisory_engagements" layout="child_tab" displayName="Advisory">
+    <component name="advisory_engagements_list" layout="ListView" table_id="advisory_engagements" createButton="VISIBLE" editType="DETAILS">
+      <field id="engagement_number" displayName="Engagement #" displayType="Text" enableInlineEdit="FALSE" tooltip="Unique engagement reference" />
+      <field id="engagement_type_category_id" displayName="Type" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Tax Plan, Financial Management, Hourly, etc." />
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Current engagement status" />
+      <field id="amount" displayName="Fee" displayType="Currency" enableInlineEdit="TRUE" tooltip="Engagement fee" />
+      <field id="billing_type_category_id" displayName="Billing" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="One-Time, Hourly, or Annual" />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Business Formations -->
+  <pageSection name="companies_child_tab_business_formations" layout="child_tab" displayName="Formations">
+    <component name="business_formations_list" layout="ListView" table_id="business_formations" createButton="VISIBLE" editType="DETAILS">
+      <field id="formation_number" displayName="Formation #" displayType="Text" enableInlineEdit="FALSE" tooltip="Unique formation reference" />
+      <field id="entity_type_category_id" displayName="Entity Type" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="LLC, S-Corp, C-Corp, etc." />
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Current formation status" />
+      <field id="state_of_incorporation" displayName="State" displayType="Text" enableInlineEdit="TRUE" tooltip="State of incorporation" />
+      <field id="confirmed_name" displayName="Confirmed Name" displayType="Text" enableInlineEdit="FALSE" tooltip="Final approved business name" />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Services -->
+  <pageSection name="companies_child_tab_company_purchases" layout="child_tab" displayName="Services">
+    <component name="company_purchases_list" layout="ListView" table_id="company_purchases" createButton="VISIBLE" editType="MODAL">
+      <field id="offer_id" displayName="Service" enableInlineEdit="FALSE" tooltip="Which service offering">
+        <lookup>
+          <ref table_id="offers" field_id="name" />
+        </lookup>
+      </field>
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Active, Behind, Paused, etc." />
+      <field id="price" displayName="Price" displayType="Currency" enableInlineEdit="TRUE" tooltip="Actual price for this client" />
+      <field id="service_frequency_category_id" displayName="Frequency" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="How often work happens" />
+      <field id="start_date" displayName="Start Date" displayType="DateOnly" enableInlineEdit="TRUE" tooltip="When service began" />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Documents -->
+  <pageSection name="companies_child_tab_client_documents" layout="child_tab" displayName="Documents">
+    <component name="client_documents_list" layout="ListView" table_id="client_documents" createButton="VISIBLE" editType="MODAL">
+      <field id="document_type_category_id" displayName="Document Type" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="W-2, 1099, Consent Form, etc." />
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Not Requested to Requested to Submitted to Verified" />
+      <field id="tax_year" displayName="Tax Year" displayType="Integer" enableInlineEdit="TRUE" tooltip="Which year this document is for" />
+      <field id="related_entity_type" displayName="Related To" displayType="Text" enableInlineEdit="FALSE" tooltip="Tax return, advisory engagement, or formation" />
+      <field id="file_url" displayName="File" displayType="URL" enableInlineEdit="TRUE" tooltip="Link to document in TaxDome" />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Tool Access -->
+  <pageSection name="companies_child_tab_tool_accesses" layout="child_tab" displayName="Tool Access">
+    <component name="tool_accesses_list" layout="ListView" table_id="tool_accesses" createButton="VISIBLE" editType="MODAL">
+      <field id="tool_id" displayName="Tool" enableInlineEdit="FALSE" tooltip="Which system">
+        <lookup>
+          <ref table_id="tools" field_id="name" />
+        </lookup>
+      </field>
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Access status — Requested, Granted, Verified" />
+      <field id="login_username" displayName="Login" displayType="Text" enableInlineEdit="TRUE" tooltip="Username/email for access (sensitive)" />
+      <field id="has_two_factor" displayName="2FA?" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Two-factor authentication enabled?" />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Payments -->
+  <pageSection name="companies_child_tab_payments" layout="child_tab" displayName="Payments">
+    <component name="payments_list" layout="ListView" table_id="payments" createButton="VISIBLE" editType="MODAL">
+      <field id="amount" displayName="Amount" displayType="Currency" enableInlineEdit="FALSE" tooltip="Payment amount" />
+      <field id="direction_category_id" displayName="Direction" displayType="SingleSelect" enableInlineEdit="FALSE" tooltip="Inbound (from client) or Outbound (to vendor)" />
+      <field id="payment_method_category_id" displayName="Method" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Check, Cash, Credit Card, Bank Transfer" />
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Pending, Completed, Failed, Refunded" />
+      <field id="related_entity_type" displayName="For" displayType="Text" enableInlineEdit="FALSE" tooltip="What this payment is for" />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Touchpoints -->
+  <pageSection name="companies_child_tab_touchpoints" layout="child_tab" displayName="Touchpoints">
+    <component name="touchpoints_list" layout="ListView" table_id="touchpoints" createButton="VISIBLE" editType="MODAL">
+      <field id="touchpoint_type_category_id" displayName="Type" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Phone, Email, WhatsApp, In-Person, etc." />
+      <field id="direction_category_id" displayName="Direction" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Inbound or Outbound" />
+      <field id="subject" displayName="Subject" displayType="Text" enableInlineEdit="TRUE" tooltip="Brief description" />
+      <field id="occurred_at" displayName="Date" displayType="DateTime" enableInlineEdit="TRUE" tooltip="When this touchpoint happened" />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Assignments -->
+  <pageSection name="companies_child_tab_account_assignments" layout="child_tab" displayName="Team">
+    <component name="account_assignments_list" layout="ListView" table_id="account_assignments" createButton="VISIBLE" editType="MODAL">
+      <field id="team_member_id" displayName="Team Member" enableInlineEdit="TRUE" tooltip="Assigned team member">
+        <lookup>
+          <ref table_id="internal_team" field_id="full_name" />
+          <ref table_id="internal_team" field_id="job_title" />
+        </lookup>
+      </field>
+      <field id="assignment_type_category_id" displayName="Role" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Owner, Preparer, Reviewer, etc." />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Requests -->
+  <pageSection name="companies_child_tab_requests" layout="child_tab" displayName="Requests">
+    <component name="requests_list" layout="ListView" table_id="requests" createButton="VISIBLE" editType="DETAILS">
+      <field id="request_number" displayName="Request #" displayType="Text" enableInlineEdit="FALSE" tooltip="Unique request reference" />
+      <field id="title" displayName="Title" displayType="Text" enableInlineEdit="FALSE" tooltip="Brief description of the request" />
+      <field id="request_type_category_id" displayName="Type" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Support, Question, Escalation, Internal Discovery" />
+      <field id="priority_category_id" displayName="Priority" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Low, Normal, Urgent" />
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Current request status" />
+    </component>
+  </pageSection>
+
+</page>

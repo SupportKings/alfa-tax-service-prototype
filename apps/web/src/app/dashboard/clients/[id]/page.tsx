@@ -1,22 +1,29 @@
-import { Suspense } from "react";
+"use client";
 
-import { notFound, redirect } from "next/navigation";
+import { use } from "react";
+
+import { notFound } from "next/navigation";
 
 import MainLayout from "@/components/layout/main-layout";
 
-import { getClient } from "@/features/clients/actions/getClient";
-import ClientDetailSkeleton from "@/features/clients/components/client.detail.skeleton";
-import ClientDetailView from "@/features/clients/components/client.detail.view";
-import ClientDetailHeader from "@/features/clients/layout/client.detail.header";
-import type { ClientWithRelations } from "@/features/clients/types/client";
-
-import { getUser } from "@/queries/getUser";
-
+import ClientDetailView from "@/features/clients/components/client-detail-view";
 import {
-	dehydrate,
-	HydrationBoundary,
-	QueryClient,
-} from "@tanstack/react-query";
+	getAdvisoryForClient,
+	getAssignmentsForClient,
+	getClientById,
+	getClientRevenueTrend,
+	getClientServiceBreakdown,
+	getContactsForClient,
+	getDocumentsForClient,
+	getFormationsForClient,
+	getPaymentsForClient,
+	getPurchasesForClient,
+	getRequestsForClient,
+	getTaxReturnsForClient,
+	getToolAccessForClient,
+	getTouchpointsForClient,
+} from "@/features/clients/data/mock-data";
+import ClientDetailHeader from "@/features/clients/layout/client.detail.header";
 
 interface ClientDetailPageProps {
 	params: Promise<{
@@ -25,63 +32,53 @@ interface ClientDetailPageProps {
 }
 
 export default function ClientDetailPage({ params }: ClientDetailPageProps) {
-	return (
-		<Suspense fallback={<ClientDetailSkeleton clientId="" />}>
-			<ClientDetailPageAsync params={params} />
-		</Suspense>
-	);
-}
+	const { id } = use(params);
 
-async function ClientDetailPageAsync({ params }: ClientDetailPageProps) {
-	const { id } = await params;
-
-	// Validate that id is provided
-	if (!id) {
-		notFound();
-	}
-
-	const queryClient = new QueryClient();
-	const session = await getUser();
-
-	if (!session) {
-		redirect("/");
-	}
-
-	// Prefetch the client data
-	await queryClient.prefetchQuery({
-		queryKey: ["clients", "detail", id],
-		queryFn: () => getClient(id),
-	});
-
-	// Get the prefetched data to check if client exists
-	const client = queryClient.getQueryData<ClientWithRelations>([
-		"clients",
-		"detail",
-		id,
-	]);
+	const client = getClientById(id);
 
 	if (!client) {
 		notFound();
 	}
 
-	// Extract client name for header
-	const clientName = client
-		? `${client.client_name} (${client.first_name} ${client.last_name})`
-		: undefined;
+	const contacts = getContactsForClient(id);
+	const taxReturns = getTaxReturnsForClient(id);
+	const advisory = getAdvisoryForClient(id);
+	const formations = getFormationsForClient(id);
+	const purchases = getPurchasesForClient(id);
+	const documents = getDocumentsForClient(id);
+	const toolAccessData = getToolAccessForClient(id);
+	const paymentsData = getPaymentsForClient(id);
+	const touchpointsData = getTouchpointsForClient(id);
+	const assignments = getAssignmentsForClient(id);
+	const requests = getRequestsForClient(id);
+	const revenueTrend = getClientRevenueTrend(id);
+	const serviceBreakdown = getClientServiceBreakdown(id);
 
 	return (
-		<HydrationBoundary state={dehydrate(queryClient)}>
-			<MainLayout
-				headers={[
-					<ClientDetailHeader
-						key="client-detail-header"
-						clientId={id}
-						clientName={clientName}
-					/>,
-				]}
-			>
-				<ClientDetailView client={client} />
-			</MainLayout>
-		</HydrationBoundary>
+		<MainLayout
+			headers={[
+				<ClientDetailHeader
+					key="client-detail-header"
+					clientName={client.full_name}
+				/>,
+			]}
+		>
+			<ClientDetailView
+				client={client}
+				contacts={contacts}
+				taxReturns={taxReturns}
+				advisory={advisory}
+				formations={formations}
+				purchases={purchases}
+				documents={documents}
+				toolAccess={toolAccessData}
+				payments={paymentsData}
+				touchpoints={touchpointsData}
+				assignments={assignments}
+				requests={requests}
+				revenueTrend={revenueTrend}
+				serviceBreakdown={serviceBreakdown}
+			/>
+		</MainLayout>
 	);
 }

@@ -1,0 +1,179 @@
+#GlobalSettings
+-CompanyName: Alfa Tax Service
+-CompanyWebsite: [human fills this in]
+-CompanyOwnerRegion: San Antonio, Texas, USA
+-ClientsRegion: San Antonio metro area, Texas (mix of individuals and small businesses; industries include ecommerce, construction, professional services)
+-BusinessStartDate: 2024-01-01
+
+#companies
+*Realistic Record Count: 500
+
+*Plausible Values
+-full_name: 70% individual names (Hispanic and Anglo mix reflecting San Antonio demographics), 30% small business names (construction, ecommerce, professional services LLCs)
+-email: Mix of personal email providers (gmail, yahoo, outlook) for individuals; company domains for businesses
+-phone: San Antonio area codes (210, 830)
+-is_client: 95% true
+-is_vendor: 5% true (offshore teams, third-party accountants)
+-status_category_id: 5% New Lead, 5% Prospect, 80% Active Client, 5% On Hold, 5% Churned
+-source_category_id: 70% Referral, 10% Website, 10% Phone, 5% Email, 5% WhatsApp
+-client_type_category_id: 65% Individual, 35% Business
+-language_preference_category_id: 50% English, 30% Spanish, 20% Both
+-quality_category_id: 40% Great, 35% Good, 15% Okay, 10% Difficult
+-industry_category_id: For businesses only — 25% Construction, 25% Ecommerce, 25% Professional Services, 25% Other
+-website: Businesses only, ~35% of records
+-tax_id_ein: Businesses only, ~35% of records
+-state_tax_id: Businesses only, ~25% of records (some still pending)
+-date_of_incorporation: Businesses only, ranging 2005-2024
+-legal_structure_category_id: For businesses — 40% LLC, 25% S-Corp, 15% Sole Prop, 10% C-Corp, 10% Partnership
+-state_of_incorporation: 90% Texas, 10% other states (Delaware, Wyoming, Nevada)
+
+#contacts
+*Realistic Record Count: 1-3 per company (higher for businesses, 1 for most individuals)
+
+*Plausible Values
+-full_name: Hispanic and Anglo names reflecting San Antonio demographics
+-email: Personal or professional email matching company
+-phone: San Antonio area codes (210, 830)
+-role: Individual clients: "Self" or "Spouse". Business clients: Owner, CFO, Bookkeeper, Office Manager
+-is_primary: First contact per company is primary
+-date_of_birth: 1955-2000 range
+-ssn_last_four: 4-digit numbers
+
+#internal_team
+*Realistic Record Count: 8
+
+*Plausible Values
+-full_name: Kathy Alfaro, Carmen [last name], Jacob [last name], Carina [last name], Johnathan [last name], DJ [last name], plus 2 offshore/vendor team members
+-email: Professional email at Alfa Tax domain
+-phone: San Antonio area codes
+-job_title: Owner/CPA, Front Desk, Data Entry Clerk, Junior Tax Accountant, Tax Accountant / Tax Prep, Offshore Tax Team Lead, Temp Tax Worker, Offshore Bookkeeper
+-team_type_category_id: 4 In-Office, 2 Offshore, 2 Third Party
+-status_category_id: 85% Active, 15% varies (seasonal temps)
+-hourly_rate: $15-$75 depending on role (Front Desk lower, CPA highest)
+
+#tax_returns
+*Realistic Record Count: 600 (500 clients x ~1.2 avg returns per client; some have both personal + business)
+
+*Plausible Values
+-tax_return_number: Sequential, e.g., "TR-10001"
+-tax_year: 80% current year (2025), 15% prior year (2024), 5% amended older years
+-return_type_category_id: 55% Individual, 30% Business, 10% Sales Tax, 5% Amended
+-status_category_id: During tax season (Jan-Apr): heavy concentration in statuses 000-420. Off-season: most at 1000 Complete. Realistic spread: 10% New, 5% Blocked, 10% Data Entry stages, 15% Tax Prep stages, 10% Manager Review, 10% Client Review, 5% Ready to E-File, 35% Complete
+-complexity_category_id: 50% Simple, 35% Standard, 15% Complex
+-intake_method_category_id: 60% Virtual/TaxDome, 40% In-Person
+-has_audit_protection: 70% true
+-has_identity_protection: 40% true
+-due_at: 75% April 15, 15% October 15 (extensions), 10% quarterly dates
+-amount: $350-$5,000 (Simple W-2: $350, standard individual: $500-$800, business: $1,000-$5,000; trending up ~5% per year, noisy)
+-payment_received_at: 80% have payment, scattered across all stages — some pay at intake, some after completion
+
+#advisory_engagements
+*Realistic Record Count: 40-60 (this is the growing offer — ~8% of client base, trending up ~30% per year)
+
+*Plausible Values
+-engagement_number: Sequential, e.g., "ADV-1001"
+-engagement_type_category_id: 35% Tax Plan, 20% Tax Plan + Books, 25% Financial Management, 15% Advisory Hourly, 5% Ad-Hoc
+-status_category_id: 15% early stages (000-120), 20% doc/review stages (200-320), 15% presentation (400-420), 10% implementation (500-520), 40% Complete
+-amount: Tax Plan: $2,500; Tax Plan + Books: $5,000; Financial Management: $10,000-$30,000/yr; Advisory Hourly: $150-$250 x hours; Ad-Hoc: $500-$2,000 (trending up, ~20% per year, gradual)
+-billing_type_category_id: 40% One-Time, 20% Hourly, 40% Annual
+-hourly_rate: $150 for individual advisory, $250 for business advisory (null for non-hourly)
+-implementation_offered: 20% true (Kathy only offers implementation for ~20% of advisory clients)
+
+#business_formations
+*Realistic Record Count: 25-35 per year
+
+*Plausible Values
+-formation_number: Sequential, e.g., "BF-1001"
+-status_category_id: 10% early (000-120), 15% name search (200-210), 20% state filing (220-310), 15% EIN (320-410), 10% waiting on state tax ID (500), 30% Complete
+-entity_type_category_id: 50% LLC, 20% S-Corp, 15% C-Corp, 10% Partnership, 5% Sole Prop
+-state_of_incorporation: 85% Texas, 15% other (Delaware, Wyoming, Nevada)
+-proposed_names: 2-3 name options per formation
+-confirmed_name: Populated after status 210
+-registered_agent: Mix of Kathy Alfaro and third-party agents
+-ein: Populated after status 410
+-state_tax_id: Populated after status 510
+-amount: Always $500
+
+#client_documents
+*Realistic Record Count: 3-8 per tax return, 2-4 per advisory engagement, 3-6 per business formation
+
+*Plausible Values
+-document_type_category_id: For tax: W-2, 1099, Prior Year Return, Consent Form, Engagement Form, Brokerage Statement, Rental Income Docs, Business Income Docs, Receipt. For advisory: Tax Return (2 years), Income Statement, Balance Sheet, Profit/Loss. For formation: Articles of Org, Member Info, Name Search Results, EIN Confirmation, State Certificate
+-status_category_id: 15% Not Requested, 20% Requested, 5% Needs Help, 5% Wrong Document, 25% Submitted, 30% Verified
+-file_url: URL pattern pointing to TaxDome storage
+-tax_year: Matching parent tax_return year
+
+#requests
+*Realistic Record Count: 80-120 per year (higher during tax season Jan-Apr)
+
+*Plausible Values
+-request_number: Sequential, e.g., "REQ-1001"
+-request_type_category_id: 40% Support, 25% Question, 20% Escalation, 15% Internal Discovery
+-source_category_id: 30% TaxDome, 25% Phone, 20% Email, 15% WhatsApp, 5% Website, 5% Walk-In
+-title: Tax-related questions ("Can't find my SIN number", "Need mortgage letter", "Missing brokerage docs"), bookkeeping questions ("Where is my P&L"), system issues ("TaxDome is down"), advisory requests ("Want to form an LLC", "Going through divorce, need tax advice")
+-priority_category_id: 60% Normal, 25% Urgent (during tax season), 15% Low
+-status_category_id: 10% New, 15% Triaged, 30% In Progress, 10% Waiting on Client, 5% Won't Do, 30% Resolved
+-resolution: Populated for resolved requests
+
+#account_assignments
+*Realistic Record Count: 1-3 per entity (most entities have 1 Owner + sometimes a Preparer or Reviewer)
+
+*Plausible Values
+-entity_type: 40% tax_returns, 20% companies, 15% advisory_engagements, 10% business_formations, 15% requests
+-assignment_type_category_id: 40% Owner, 25% Preparer, 20% Reviewer, 10% Data Entry, 5% Backup
+-team_member_id: Tax returns — Jacob (Data Entry), Carina/Johnathan (Preparer), Kathy (Reviewer). Advisory — always Kathy. Bookkeeping — Simiran offshore. Front desk — Carmen
+
+#payments
+*Realistic Record Count: 500-700 per year (mostly tax return payments during Jan-Apr season)
+
+*Plausible Values
+-direction_category_id: 90% Inbound, 10% Outbound (payments to offshore teams, third-party vendors)
+-related_entity_type: 60% tax_returns, 15% advisory_engagements, 10% company_purchases, 10% business_formations, 5% null
+-amount: Tax: $350-$5,000. Advisory: $500-$30,000. Formation: $500. Bookkeeping monthly: $500-$3,000. Outbound to vendors: $500-$5,000/mo (trending up, ~10% per year, noisy — seasonal spikes Jan-Apr)
+-payment_method_category_id: 40% Credit Card, 30% Check, 15% Cash, 15% Bank Transfer
+-status_category_id: 85% Completed, 10% Pending, 3% Failed, 2% Refunded
+
+#touchpoints
+*Realistic Record Count: 5-15 per company per year (higher during tax season, higher for bookkeeping clients)
+
+*Plausible Values
+-entity_type: 90% companies, 10% contacts
+-touchpoint_type_category_id: 30% Phone Call, 25% TaxDome Message, 20% Email, 10% In-Person, 10% WhatsApp, 5% Video Call
+-direction_category_id: 55% Inbound, 45% Outbound
+-subject: Tax season: "Document follow-up", "Return ready for review", "Filing confirmation". Advisory: "Tax plan review call", "QBO dashboard walkthrough". General: "Payment reminder", "Missing documents"
+-occurred_at: Heavy concentration Jan-Apr (tax season), lighter May-Dec
+
+#tool_accesses
+*Realistic Record Count: 2-4 per company
+
+*Plausible Values
+-status_category_id: 10% Not Requested, 10% Requested, 5% Access Issue, 50% Granted, 25% Verified Working
+-login_username: Email or username format
+-has_two_factor: 80% true for TaxDome/QBO/Gusto, 100% true for ATX
+
+#offers
+*Realistic Record Count: 10
+
+*Plausible Values
+-name: Tax Filing - Individual, Tax Filing - Business, Sales Tax Filing, Monthly Bookkeeping, Quarterly Bookkeeping, Annual Bookkeeping, Tax Plan (Basic), Tax Plan + Book Modifications, Financial Management (Annual), Business Formation
+-offer_type_category_id: Tax, Tax, Tax, Bookkeeping, Bookkeeping, Bookkeeping, Advisory, Advisory, Advisory, Formation
+-price: $350, $1000, $500, $1500, $1000, $2500, $2500, $5000, $15000, $500
+-billing_frequency_category_id: One-time, One-time, One-time, Monthly, Quarterly, Annually, One-time, One-time, Annually, One-time
+-is_active: All true
+
+#company_purchases
+*Realistic Record Count: 550-650 (most clients have 1 purchase; bookkeeping clients have ongoing; some have multiple services)
+
+*Plausible Values
+-status_category_id: 5% Pending Setup, 75% Active - Current, 5% Active - Behind, 3% Paused, 2% Cancelled, 10% Completed/Ended
+-price: Matches offer price with some variation +/-10%
+-start_date: Distributed across 2024-2025, heavier in Jan-Mar for tax
+-end_date: Null for ongoing (bookkeeping, financial management); populated for one-time (tax, formation, advisory)
+-service_frequency_category_id: Tax clients: Annually. Bookkeeping: 70% Monthly, 20% Quarterly, 10% Annually. Advisory: One-time or Annually
+
+#tools
+*Realistic Record Count: 8
+
+*Plausible Values
+-name: TaxDome, QuickBooks Online (QBO), ATX Tax Software, Gusto, ADP Payroll, Alavara Sales Tax, WhatsApp, LastPass
+-tool_type_category_id: Tax Prep, Bookkeeping, Tax Prep, Payroll, Payroll, Sales Tax, Communication, Security

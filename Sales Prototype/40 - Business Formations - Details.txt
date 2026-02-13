@@ -1,0 +1,127 @@
+<!-- =========================
+     BUSINESS FORMATIONS – DETAILS PAGE
+     ========================= -->
+
+<!-- Page Summary for Business Formation
+Fields:
+
+Formation Details
+– formation_number
+– company_id
+– requesting_contact_id
+– entity_type_category_id
+– state_of_incorporation
+
+Names & Status
+– status_category_id
+– proposed_names
+– confirmed_name
+– registered_agent
+
+Key Identifiers
+– ein
+– state_tax_id
+– amount
+
+Internal
+– internal_notes
+
+Child Tables:
+– client_documents: Articles of Org, Member Info, Name Search Results, EIN Confirmation, State Certificate
+– account_assignments: Team assigned
+-->
+
+<!-- Process Remarks
+Track a formation through the multi-step state filing process. The key identifiers (EIN, state tax ID) are critically important — clients need them for opening banks, filing taxes, getting duns number, government contracting. This page stores them as a single source of truth.
+-->
+
+<!-- Navigation Path
+Advisory → Business Formations List → Formation Detail
+OR Clients List → Client Detail → Formations Tab → Formation Detail
+-->
+
+<page
+  name="business_formationsDetails"
+  layout="Details"
+  displayName="Business Formation Detail"
+  mainFieldIDs="formation_number,company_id.full_name"
+>
+
+  <pageSection
+    name="business_formations_main_fields"
+    layout="fields"
+    table_id="business_formations"
+  >
+    <subSection name="formation_details" displayName="Formation Details">
+      <field id="formation_number" displayName="Formation #" displayType="Text" tooltip="Auto-generated reference number" />
+      <field id="company_id" displayName="Client" tooltip="Which client requested this formation">
+        <lookup enableInlineCreate="FALSE">
+          <ref table_id="companies" field_id="full_name" />
+        </lookup>
+      </field>
+      <field id="requesting_contact_id" displayName="Requesting Contact" tooltip="Who specifically requested the formation">
+        <lookup enableInlineCreate="FALSE">
+          <ref table_id="contacts" field_id="full_name" />
+          <ref table_id="contacts" field_id="role" />
+        </lookup>
+      </field>
+      <field id="entity_type_category_id" displayName="Entity Type" displayType="SingleSelect" tooltip="LLC, S-Corp, C-Corp, Partnership, Sole Prop" />
+      <field id="state_of_incorporation" displayName="State" displayType="Text" tooltip="State of incorporation — 85% Texas, some Delaware/Wyoming/Nevada" />
+    </subSection>
+
+    <subSection name="names_status" displayName="Names & Status">
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" tooltip="Current stage — info gathering through state tax ID received" />
+      <field id="proposed_names" displayName="Proposed Names" displayType="Text" tooltip="2-3 candidate business names" />
+      <field id="confirmed_name" displayName="Confirmed Name" displayType="Text" tooltip="Final approved name after name search" />
+      <field id="registered_agent" displayName="Registered Agent" displayType="Text" tooltip="Registered agent for the entity" />
+    </subSection>
+
+    <subSection name="key_identifiers" displayName="Key Identifiers">
+      <field id="ein" displayName="EIN" displayType="Text" tooltip="Federal Employer Identification Number — critical for banking, taxes, contracting" />
+      <field id="state_tax_id" displayName="State Tax ID" displayType="Text" tooltip="State tax identification number — arrives by mail" />
+      <field id="amount" displayName="Fee" displayType="Currency" tooltip="Formation fee — typically $500" />
+    </subSection>
+
+    <subSection name="internal" displayName="Internal">
+      <field id="internal_notes" displayName="Internal Notes" displayType="Text" tooltip="Notes about this formation" />
+    </subSection>
+  </pageSection>
+
+  <pageSection type="metrics" name="Metrics">
+    <kpi id="business_formations_detail_kpi_1"
+         name="Days in Each Stage"
+         type="Trend"
+         displayType="Bar Chart"
+         axesSummary="Formation Status vs Average Days"
+         version="PROTOTYPE" />
+    <kpi id="business_formations_detail_kpi_2"
+         name="Formations by Entity Type"
+         type="Trend"
+         displayType="Bar Chart"
+         axesSummary="Entity Type vs Count"
+         version="PROTOTYPE" />
+  </pageSection>
+
+  <!-- Child Tab: Documents -->
+  <pageSection name="business_formations_child_tab_client_documents" layout="child_tab" displayName="Documents">
+    <component name="client_documents_list" layout="ListView" table_id="client_documents" createButton="VISIBLE" editType="MODAL">
+      <field id="document_type_category_id" displayName="Document Type" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Articles of Org, Member Info, EIN Confirmation, etc." />
+      <field id="status_category_id" displayName="Status" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Not Requested to Requested to Submitted to Verified" />
+      <field id="file_url" displayName="File" displayType="URL" enableInlineEdit="TRUE" tooltip="Link to document" />
+    </component>
+  </pageSection>
+
+  <!-- Child Tab: Assignments -->
+  <pageSection name="business_formations_child_tab_account_assignments" layout="child_tab" displayName="Team">
+    <component name="account_assignments_list" layout="ListView" table_id="account_assignments" createButton="VISIBLE" editType="MODAL">
+      <field id="team_member_id" displayName="Team Member" enableInlineEdit="TRUE" tooltip="Assigned team member">
+        <lookup>
+          <ref table_id="internal_team" field_id="full_name" />
+          <ref table_id="internal_team" field_id="job_title" />
+        </lookup>
+      </field>
+      <field id="assignment_type_category_id" displayName="Role" displayType="SingleSelect" enableInlineEdit="TRUE" tooltip="Owner, etc." />
+    </component>
+  </pageSection>
+
+</page>
