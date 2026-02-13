@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  # PostgreSQL database
+  db:
+    image: postgres:16-alpine
+    container_name: template-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: template
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Web app (Next.js)
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: web
+    container_name: template-web
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/template
+      - NEXT_PUBLIC_SERVER_URL=http://server:4000
+    depends_on:
+      db:
+        condition: service_healthy
+      server:
+        condition: service_started
+
+  # Server (Hono + tRPC)
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+      target: production
+    container_name: template-server
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/template
+      - CORS_ORIGIN=http://localhost:3001
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

@@ -1,0 +1,41 @@
+{
+	"name": "server",
+	"main": "src/index.ts",
+	"type": "module",
+	"scripts": {
+		"build": "tsdown",
+		"check-types": "tsc --noEmit",
+		"compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
+		"dev": "bun run --watch src/index.ts",
+		"start": "bun run dist/index.js",
+		"test": "vitest",
+		"test:run": "vitest run",
+		"test:changed": "vitest run --changed",
+		"test:coverage": "vitest run --coverage",
+		"db:push": "drizzle-kit push",
+		"db:studio": "drizzle-kit studio",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate"
+	},
+	"dependencies": {
+		"@hono/trpc-server": "^0.4.0",
+		"@trpc/client": "^11.5.0",
+		"@trpc/server": "^11.5.0",
+		"dotenv": "^17.2.1",
+		"drizzle-orm": "^0.45.1",
+		"hono": "^4.9.4",
+		"pg": "^8.16.3",
+		"postgres": "^3.4.7",
+		"zod": "^4.3.6"
+	},
+	"devDependencies": {
+		"@types/bun": "^1.2.21",
+		"@types/pg": "^8.15.5",
+		"@vitest/coverage-v8": "^4.0.18",
+		"drizzle-kit": "^0.31.4",
+		"tsdown": "^0.20.1",
+		"tsx": "^4.20.5",
+		"typescript": "^5.9.2",
+		"vitest": "^4.0.18"
+	}
+}

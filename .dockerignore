@@ -1,0 +1,58 @@
+# Dependencies
+node_modules
+**/node_modules
+
+# Build output
+.next
+apps/web/.next
+apps/web/out
+apps/server/dist
+apps/server/server
+
+# Coverage
+coverage
+**/coverage
+
+# Test files
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+e2e
+playwright-report
+test-results
+
+# Environment files (should be injected at runtime)
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+!README.md
+docs
+
+# Misc
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+
+# Turborepo
+.turbo
+
+# Drizzle
+drizzle
+
+# Development files
+*.local

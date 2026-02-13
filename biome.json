@@ -1,0 +1,140 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
+
+	"plugins": ["./biome-plugins/object-assign.grit"],
+
+	"vcs": {
+		"enabled": false,
+		"clientKind": "git",
+		"useIgnoreFile": false
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": [
+			"**",
+			"!**/.next",
+			"!**/dist",
+			"!**/.turbo",
+			"!**/dev-dist",
+			"!**/.zed",
+			"!**/.vscode",
+			"!**/routeTree.gen.ts",
+			"!**/src-tauri",
+			"!**/.nuxt",
+			"!bts.jsonc",
+			"!**/.expo",
+			"!**/.wrangler"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"a11y": {
+				"noStaticElementInteractions": "off",
+				"noSvgWithoutTitle": "off",
+				"useValidAnchor": "off",
+				"noLabelWithoutControl": "warn"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "info",
+				"useUniqueElementIds": "warn"
+			},
+			"suspicious": {
+				"noExplicitAny": "error",
+				"noArrayIndexKey": "warn",
+				"useIterableCallbackReturn": "warn"
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"level": "warn",
+					"fix": "safe",
+					"options": {
+						"functions": ["clsx", "cva", "cn"]
+					}
+				}
+			},
+			"style": {
+				"noNonNullAssertion": "warn",
+				"noParameterAssign": "error",
+				"useAsConstAssertion": "error",
+				"useDefaultParameterLast": "error",
+				"useEnumInitializers": "error",
+				"useSelfClosingElements": "error",
+				"useSingleVarDeclarator": "error",
+				"noUnusedTemplateLiteral": "error",
+				"useNumberNamespace": "error",
+				"noInferrableTypes": "error",
+				"noUselessElse": "error"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		}
+	},
+	"css": {
+		"linter": {
+			"enabled": false
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["**/components/charts/**"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noExplicitAny": "off",
+						"noArrayIndexKey": "off"
+					},
+					"a11y": {
+						"noLabelWithoutControl": "off"
+					}
+				}
+			}
+		}
+	],
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"groups": [
+							["react", "react/**"],
+							":BLANK_LINE:",
+							["next", "next/**"],
+							":BLANK_LINE:",
+							[":NODE:", ":BUN:"],
+							":BLANK_LINE:",
+							["@trpc/**"],
+							":BLANK_LINE:",
+							["@radix-ui/**"],
+							":BLANK_LINE:",
+							["@/lib/**"],
+							":BLANK_LINE:",
+							["@/hooks/**"],
+							":BLANK_LINE:",
+							["@/utils/**"],
+							":BLANK_LINE:",
+							["@/components/**"],
+							":BLANK_LINE:",
+							["@/features/**"],
+							":BLANK_LINE:",
+							["@/**"],
+							":BLANK_LINE:",
+							["**"],
+							":BLANK_LINE:",
+							["./**", "../**"]
+						]
+					}
+				}
+			}
+		}
+	}
+}
