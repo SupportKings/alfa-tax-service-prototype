@@ -1,3 +1,5 @@
+export type TaxReturnComplexity = "Simple" | "Standard" | "Complex";
+
 export interface TaxReturn {
 	id: string;
 	taxReturnNumber: string;
@@ -11,7 +13,8 @@ export interface TaxReturn {
 	taxYear: number;
 	returnType: "Individual" | "Business" | "Sales Tax" | "Amended";
 	status: TaxReturnStatus;
-	complexity: "Simple" | "Standard" | "Complex";
+	complexity: TaxReturnComplexity;
+	pendingKathyReview: boolean;
 	intakeMethod: "In-Person" | "Virtual/TaxDome";
 	dueDate: string;
 	amount: number;
@@ -61,7 +64,7 @@ export interface TaxReturnAssignment {
 export interface TaxReturnFilterState {
 	status: TaxReturnStatus | "all";
 	returnType: "all" | "Individual" | "Business" | "Sales Tax" | "Amended";
-	complexity: "all" | "Simple" | "Standard" | "Complex";
+	complexity: "all" | TaxReturnComplexity;
 	taxYear: "all" | number;
 }
 

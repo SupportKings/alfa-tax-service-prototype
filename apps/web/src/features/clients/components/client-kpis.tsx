@@ -13,7 +13,7 @@ import {
 	ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import { TrendingUp, UserCheck, Users } from "lucide-react";
+import { Award, TrendingUp, UserCheck, Users } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import type { Client, MonthlyTrendData } from "../types";
 
@@ -35,15 +35,22 @@ export default function ClientKpis({ clients, trendData }: ClientKpisProps) {
 		prospect: clients.filter((c) => c.status === "Prospect").length,
 	};
 
+	const qualityDistribution = {
+		excellent: clients.filter((c) => c.qualityScore === "excellent").length,
+		good: clients.filter((c) => c.qualityScore === "good").length,
+		fair: clients.filter((c) => c.qualityScore === "fair").length,
+		poor: clients.filter((c) => c.qualityScore === "poor").length,
+	};
+
 	const chartConfig = {
 		count: {
 			label: "New Clients",
-			color: "hsl(var(--chart-1))",
+			color: "var(--chart-1)",
 		},
 	};
 
 	return (
-		<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+		<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
 			{/* KPI 1: Prospects Pending Conversion */}
 			<Card>
 				<CardHeader className="pb-2">
@@ -125,6 +132,35 @@ export default function ClientKpis({ clients, trendData }: ClientKpisProps) {
 							/>
 						</LineChart>
 					</ChartContainer>
+				</CardContent>
+			</Card>
+
+			{/* KPI 4: Client Quality Distribution */}
+			<Card>
+				<CardHeader className="pb-2">
+					<CardDescription className="flex items-center gap-2 text-xs">
+						<Award className="h-4 w-4" />
+						Client Quality Distribution
+					</CardDescription>
+					<CardTitle className="text-3xl tabular-nums">
+						{clients.length}
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
+						<span className="text-green-600">
+							{qualityDistribution.excellent} Excellent
+						</span>
+						<span className="text-blue-600">
+							{qualityDistribution.good} Good
+						</span>
+						<span className="text-yellow-600">
+							{qualityDistribution.fair} Fair
+						</span>
+						<span className="text-red-600">
+							{qualityDistribution.poor} Poor
+						</span>
+					</div>
 				</CardContent>
 			</Card>
 		</div>

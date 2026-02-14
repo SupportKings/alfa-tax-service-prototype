@@ -19,9 +19,15 @@ import {
 	Phone,
 	Tag,
 	User,
+	UserCheck,
 	UserRound,
 } from "lucide-react";
-import type { Request, RequestPriority, RequestSource } from "../types";
+import type {
+	Request,
+	RequestPriority,
+	RequestSource,
+	RequestSourceChannel,
+} from "../types";
 
 interface RequestDetailViewProps {
 	request: Request;
@@ -65,6 +71,41 @@ function getSourceIcon(source: RequestSource) {
 			return <Globe className={iconClass} />;
 		case "Walk-In":
 			return <UserRound className={iconClass} />;
+	}
+}
+
+function getChannelLabel(channel: RequestSourceChannel): string {
+	switch (channel) {
+		case "tax_dome":
+			return "Tax Dome";
+		case "email":
+			return "Email";
+		case "phone":
+			return "Phone";
+		case "whatsapp":
+			return "WhatsApp";
+		case "website":
+			return "Website";
+		case "in_person":
+			return "In Person";
+	}
+}
+
+function getChannelIcon(channel: RequestSourceChannel) {
+	const iconClass = "h-4 w-4 text-muted-foreground";
+	switch (channel) {
+		case "tax_dome":
+			return <FileText className={iconClass} />;
+		case "email":
+			return <Mail className={iconClass} />;
+		case "phone":
+			return <Phone className={iconClass} />;
+		case "whatsapp":
+			return <MessageCircle className={iconClass} />;
+		case "website":
+			return <Globe className={iconClass} />;
+		case "in_person":
+			return <UserCheck className={iconClass} />;
 	}
 }
 
@@ -144,6 +185,17 @@ export default function RequestDetailView({ request }: RequestDetailViewProps) {
 								<div className="mt-1 flex items-center gap-1.5">
 									{getSourceIcon(request.source)}
 									<span className="text-sm">{request.source}</span>
+								</div>
+							</div>
+							<div>
+								<span className="font-medium text-muted-foreground text-xs">
+									Channel
+								</span>
+								<div className="mt-1 flex items-center gap-1.5">
+									{getChannelIcon(request.sourceChannel)}
+									<span className="text-sm">
+										{getChannelLabel(request.sourceChannel)}
+									</span>
 								</div>
 							</div>
 							<div>

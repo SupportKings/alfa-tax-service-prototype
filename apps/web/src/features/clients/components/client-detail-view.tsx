@@ -56,6 +56,7 @@ import type {
 	BusinessFormation,
 	Client,
 	ClientDocument,
+	ClientQualityScore,
 	ClientRequest,
 	CompanyPurchase,
 	Contact,
@@ -172,6 +173,27 @@ function getStatusColor(
 	return "gray";
 }
 
+function getQualityScoreColorScheme(
+	score: ClientQualityScore,
+): "green" | "blue" | "yellow" | "red" {
+	switch (score) {
+		case "excellent":
+			return "green";
+		case "good":
+			return "blue";
+		case "fair":
+			return "yellow";
+		case "poor":
+			return "red";
+		default:
+			return "green";
+	}
+}
+
+function formatQualityScoreLabel(score: ClientQualityScore): string {
+	return score.charAt(0).toUpperCase() + score.slice(1);
+}
+
 // ============================
 // Detail Field Component
 // ============================
@@ -219,14 +241,14 @@ export default function ClientDetailView({
 	const revenueChartConfig = {
 		revenue: {
 			label: "Revenue",
-			color: "hsl(var(--chart-1))",
+			color: "var(--chart-1)",
 		},
 	};
 
 	const serviceChartConfig = {
 		count: {
 			label: "Active Services",
-			color: "hsl(var(--chart-2))",
+			color: "var(--chart-2)",
 		},
 	};
 
@@ -344,6 +366,21 @@ export default function ClientDetailView({
 								>
 									{client.quality}
 								</Badge>
+							</div>
+						</div>
+						<div className="space-y-1">
+							<span className="font-medium text-muted-foreground text-xs">
+								Quality Score
+							</span>
+							<div className="flex items-center gap-2">
+								<StatusBadge
+									colorScheme={getQualityScoreColorScheme(client.qualityScore)}
+								>
+									{formatQualityScoreLabel(client.qualityScore)}
+								</StatusBadge>
+								<span className="text-muted-foreground text-xs">
+									Avg Response: {client.avgResponseDays.toFixed(1)} days
+								</span>
 							</div>
 						</div>
 						<div className="space-y-1">

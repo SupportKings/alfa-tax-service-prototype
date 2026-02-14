@@ -14,7 +14,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-001",
 		engagement_number: "ADV-1001",
-		client_id: "client-001",
+		client_id: "c001",
 		client_name: "Maria Elena Gutierrez",
 		engagement_type: "Tax Plan",
 		status: "Complete",
@@ -65,7 +65,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-002",
 		engagement_number: "ADV-1002",
-		client_id: "client-002",
+		client_id: "c002",
 		client_name: "Rodriguez Construction LLC",
 		engagement_type: "Tax Plan + Books",
 		status: "Complete",
@@ -123,7 +123,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-003",
 		engagement_number: "ADV-1003",
-		client_id: "client-003",
+		client_id: "c003",
 		client_name: "James Mitchell",
 		engagement_type: "Financial Management",
 		status: "Implementation",
@@ -166,7 +166,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-004",
 		engagement_number: "ADV-1004",
-		client_id: "client-004",
+		client_id: "c008",
 		client_name: "Alamo City Ecommerce Group",
 		engagement_type: "Financial Management",
 		status: "Analysis",
@@ -224,7 +224,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-005",
 		engagement_number: "ADV-1005",
-		client_id: "client-005",
+		client_id: "c007",
 		client_name: "Roberto Salazar",
 		engagement_type: "Tax Plan",
 		status: "Presentation Scheduled",
@@ -267,7 +267,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-006",
 		engagement_number: "ADV-1006",
-		client_id: "client-006",
+		client_id: "c015",
 		client_name: "San Pedro Dental Associates",
 		engagement_type: "Tax Plan + Books",
 		status: "Documents Gathering",
@@ -310,7 +310,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-007",
 		engagement_number: "ADV-1007",
-		client_id: "client-007",
+		client_id: "c009",
 		client_name: "Patricia Hernandez",
 		engagement_type: "Advisory Hourly",
 		status: "Complete",
@@ -345,7 +345,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-008",
 		engagement_number: "ADV-1008",
-		client_id: "client-008",
+		client_id: "c021",
 		client_name: "Lone Star Builders Inc",
 		engagement_type: "Financial Management",
 		status: "Complete",
@@ -418,7 +418,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-009",
 		engagement_number: "ADV-1009",
-		client_id: "client-009",
+		client_id: "c012",
 		client_name: "Angela Trevino-Smith",
 		engagement_type: "Tax Plan",
 		status: "Complete",
@@ -461,7 +461,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-010",
 		engagement_number: "ADV-1010",
-		client_id: "client-010",
+		client_id: "c010",
 		client_name: "David Ochoa",
 		engagement_type: "Advisory Hourly",
 		status: "Presentation Complete",
@@ -496,7 +496,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-011",
 		engagement_number: "ADV-1011",
-		client_id: "client-011",
+		client_id: "c013",
 		client_name: "Gonzalez & Sons Landscaping",
 		engagement_type: "Tax Plan + Books",
 		status: "Signed",
@@ -531,7 +531,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-012",
 		engagement_number: "ADV-1012",
-		client_id: "client-012",
+		client_id: "c014",
 		client_name: "Sarah Chen-Williams",
 		engagement_type: "Tax Plan",
 		status: "Discovery Call",
@@ -557,7 +557,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-013",
 		engagement_number: "ADV-1013",
-		client_id: "client-013",
+		client_id: "c017",
 		client_name: "Riverwalk Professional Services LLC",
 		engagement_type: "Financial Management",
 		status: "Presentation Scheduled",
@@ -615,7 +615,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-014",
 		engagement_number: "ADV-1014",
-		client_id: "client-014",
+		client_id: "c024",
 		client_name: "Carlos Mendoza",
 		engagement_type: "Ad-Hoc",
 		status: "Complete",
@@ -650,7 +650,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-015",
 		engagement_number: "ADV-1015",
-		client_id: "client-015",
+		client_id: "c027",
 		client_name: "Heritage Oak Homes LLC",
 		engagement_type: "Tax Plan",
 		status: "Proposal Sent",
@@ -676,7 +676,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-016",
 		engagement_number: "ADV-1016",
-		client_id: "client-016",
+		client_id: "c005",
 		client_name: "Lucia Ramirez",
 		engagement_type: "Tax Plan",
 		status: "Complete",
@@ -719,7 +719,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-017",
 		engagement_number: "ADV-1017",
-		client_id: "client-017",
+		client_id: "c019",
 		client_name: "Tex-Mex Ventures LLC",
 		engagement_type: "Tax Plan + Books",
 		status: "Analysis",
@@ -777,7 +777,7 @@ export const advisoryEngagements: AdvisoryEngagement[] = [
 	{
 		id: "adv-018",
 		engagement_number: "ADV-1018",
-		client_id: "client-018",
+		client_id: "c020",
 		client_name: "Michael Thompson",
 		engagement_type: "Advisory Hourly",
 		status: "Inquiry",

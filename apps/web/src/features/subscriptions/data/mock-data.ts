@@ -100,7 +100,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	// === ACTIVE - CURRENT (50% ~ 17 records) ===
 	{
 		id: "sub-001",
-		client_id: "client-001",
+		client_id: "c001",
 		client_name: "Maria Elena Garza",
 		client_type: "Individual",
 		offer_id: "offer-4",
@@ -160,7 +160,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-002",
-		client_id: "client-002",
+		client_id: "c002",
 		client_name: "Rodriguez Construction LLC",
 		client_type: "Business",
 		offer_id: "offer-4",
@@ -221,7 +221,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-003",
-		client_id: "client-003",
+		client_id: "c003",
 		client_name: "Carlos Mendoza",
 		client_type: "Individual",
 		offer_id: "offer-1",
@@ -257,7 +257,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-004",
-		client_id: "client-004",
+		client_id: "c004",
 		client_name: "Lone Star Ecommerce LLC",
 		client_type: "Business",
 		offer_id: "offer-2",
@@ -293,7 +293,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-005",
-		client_id: "client-005",
+		client_id: "c005",
 		client_name: "Patricia Salinas",
 		client_type: "Individual",
 		offer_id: "offer-5",
@@ -338,7 +338,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-006",
-		client_id: "client-006",
+		client_id: "c006",
 		client_name: "Alamo City Plumbing Inc",
 		client_type: "Business",
 		offer_id: "offer-9",
@@ -391,7 +391,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-007",
-		client_id: "client-007",
+		client_id: "c007",
 		client_name: "Jennifer Tran",
 		client_type: "Individual",
 		offer_id: "offer-1",
@@ -427,7 +427,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-008",
-		client_id: "client-008",
+		client_id: "c008",
 		client_name: "SA Pro Services Group",
 		client_type: "Business",
 		offer_id: "offer-4",
@@ -471,7 +471,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-009",
-		client_id: "client-009",
+		client_id: "c009",
 		client_name: "Roberto Villarreal",
 		client_type: "Individual",
 		offer_id: "offer-7",
@@ -507,7 +507,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-010",
-		client_id: "client-010",
+		client_id: "c010",
 		client_name: "Hernandez Roofing Co",
 		client_type: "Business",
 		offer_id: "offer-3",
@@ -543,7 +543,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-011",
-		client_id: "client-011",
+		client_id: "c011",
 		client_name: "Sandra Reyes-Mitchell",
 		client_type: "Individual",
 		offer_id: "offer-1",
@@ -579,7 +579,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-012",
-		client_id: "client-012",
+		client_id: "c012",
 		client_name: "David Nguyen",
 		client_type: "Individual",
 		offer_id: "offer-5",
@@ -615,7 +615,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-013",
-		client_id: "client-013",
+		client_id: "c013",
 		client_name: "Hill Country Dental PLLC",
 		client_type: "Business",
 		offer_id: "offer-8",
@@ -651,7 +651,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-014",
-		client_id: "client-014",
+		client_id: "c014",
 		client_name: "Angela Moreno",
 		client_type: "Individual",
 		offer_id: "offer-1",
@@ -687,7 +687,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-015",
-		client_id: "client-015",
+		client_id: "c015",
 		client_name: "Fiesta Auto Parts LLC",
 		client_type: "Business",
 		offer_id: "offer-2",
@@ -723,7 +723,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-016",
-		client_id: "client-016",
+		client_id: "c016",
 		client_name: "Ramirez & Sons Concrete",
 		client_type: "Business",
 		offer_id: "offer-4",
@@ -768,7 +768,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-017",
-		client_id: "client-017",
+		client_id: "c017",
 		client_name: "Lisa Chen-Gutierrez",
 		client_type: "Individual",
 		offer_id: "offer-6",
@@ -806,7 +806,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	// === ACTIVE - BEHIND (15% ~ 5 records) ===
 	{
 		id: "sub-018",
-		client_id: "client-018",
+		client_id: "c018",
 		client_name: "Guadalupe Flores",
 		client_type: "Individual",
 		offer_id: "offer-4",
@@ -868,7 +868,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-019",
-		client_id: "client-019",
+		client_id: "c019",
 		client_name: "Tex-Mex Distributors LLC",
 		client_type: "Business",
 		offer_id: "offer-4",
@@ -921,7 +921,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-020",
-		client_id: "client-020",
+		client_id: "c020",
 		client_name: "Miguel Santos",
 		client_type: "Individual",
 		offer_id: "offer-5",
@@ -959,7 +959,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-021",
-		client_id: "client-021",
+		client_id: "c021",
 		client_name: "Riverwalk Digital Marketing",
 		client_type: "Business",
 		offer_id: "offer-9",
@@ -1012,7 +1012,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-022",
-		client_id: "client-022",
+		client_id: "c022",
 		client_name: "Tony Delgado",
 		client_type: "Individual",
 		offer_id: "offer-4",
@@ -1060,7 +1060,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	// === PENDING SETUP (10% ~ 3 records) ===
 	{
 		id: "sub-023",
-		client_id: "client-023",
+		client_id: "c023",
 		client_name: "Sophia Hernandez",
 		client_type: "Individual",
 		offer_id: "offer-4",
@@ -1088,7 +1088,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-024",
-		client_id: "client-024",
+		client_id: "c024",
 		client_name: "Westside Construction Group",
 		client_type: "Business",
 		offer_id: "offer-9",
@@ -1124,7 +1124,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-025",
-		client_id: "client-025",
+		client_id: "c025",
 		client_name: "Diana Lujan",
 		client_type: "Individual",
 		offer_id: "offer-7",
@@ -1154,7 +1154,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	// === PAUSED (10% ~ 3 records) ===
 	{
 		id: "sub-026",
-		client_id: "client-026",
+		client_id: "c026",
 		client_name: "Juan Carlos Beltran",
 		client_type: "Individual",
 		offer_id: "offer-4",
@@ -1191,7 +1191,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-027",
-		client_id: "client-027",
+		client_id: "c027",
 		client_name: "SA Vintage Resellers LLC",
 		client_type: "Business",
 		offer_id: "offer-5",
@@ -1228,7 +1228,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-028",
-		client_id: "client-028",
+		client_id: "c028",
 		client_name: "Marcus Johnson",
 		client_type: "Individual",
 		offer_id: "offer-6",
@@ -1266,7 +1266,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	// === CANCELLED (10% ~ 3 records) ===
 	{
 		id: "sub-029",
-		client_id: "client-029",
+		client_id: "c001",
 		client_name: "Rachel Kim",
 		client_type: "Individual",
 		offer_id: "offer-1",
@@ -1303,7 +1303,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-030",
-		client_id: "client-030",
+		client_id: "c002",
 		client_name: "South TX Landscaping Inc",
 		client_type: "Business",
 		offer_id: "offer-4",
@@ -1339,7 +1339,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-031",
-		client_id: "client-031",
+		client_id: "c003",
 		client_name: "Fernando Ochoa",
 		client_type: "Individual",
 		offer_id: "offer-7",
@@ -1370,7 +1370,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	// === COMPLETED/ENDED (5% ~ 2 records) ===
 	{
 		id: "sub-032",
-		client_id: "client-032",
+		client_id: "c004",
 		client_name: "Carmen Delgado-Perez",
 		client_type: "Individual",
 		offer_id: "offer-10",
@@ -1408,7 +1408,7 @@ export const mockSubscriptions: ServiceSubscription[] = [
 	},
 	{
 		id: "sub-033",
-		client_id: "client-033",
+		client_id: "c005",
 		client_name: "Oscar Vega Jr.",
 		client_type: "Individual",
 		offer_id: "offer-8",

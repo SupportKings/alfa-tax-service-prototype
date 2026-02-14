@@ -30,6 +30,7 @@ import {
 	CalendarDays,
 	CheckCircle2,
 	Clock,
+	Crown,
 	DollarSign,
 	ExternalLink,
 	FileCheck,
@@ -50,7 +51,12 @@ import {
 	YAxis,
 } from "recharts";
 import { daysInStatusData, documentCompletionData } from "../data/mock-data";
-import type { DocumentStatus, TaxReturn, TaxReturnStatus } from "../types";
+import type {
+	DocumentStatus,
+	TaxReturn,
+	TaxReturnComplexity,
+	TaxReturnStatus,
+} from "../types";
 
 interface TaxReturnDetailViewProps {
 	taxReturn: TaxReturn;
@@ -93,6 +99,19 @@ function getDocumentStatusBadge(status: DocumentStatus): string {
 	}
 }
 
+function getComplexityBadgeClasses(complexity: TaxReturnComplexity): string {
+	switch (complexity) {
+		case "Simple":
+			return "bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-300 dark:border-green-800";
+		case "Standard":
+			return "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800";
+		case "Complex":
+			return "bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800";
+		default:
+			return "";
+	}
+}
+
 function formatCurrency(amount: number): string {
 	return new Intl.NumberFormat("en-US", {
 		style: "currency",
@@ -115,7 +134,7 @@ function formatDate(dateStr: string | null): string {
 const daysChartConfig: ChartConfig = {
 	days: {
 		label: "Avg Days",
-		color: "hsl(var(--chart-1))",
+		color: "var(--chart-1)",
 	},
 };
 
@@ -126,7 +145,7 @@ const docChartConfig: ChartConfig = {
 	},
 	pending: {
 		label: "Pending",
-		color: "hsl(var(--chart-4))",
+		color: "var(--chart-4)",
 	},
 };
 
@@ -157,6 +176,19 @@ export default function TaxReturnDetailView({
 }: TaxReturnDetailViewProps) {
 	return (
 		<div className="space-y-6 p-4 lg:p-6">
+			{/* Pending Owner Review Banner */}
+			{taxReturn.pendingKathyReview && (
+				<div className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 dark:border-amber-800 dark:bg-amber-950">
+					<Crown className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+					<span className="font-medium text-amber-800 text-sm dark:text-amber-200">
+						Pending Owner Review
+					</span>
+					<span className="text-amber-600 text-xs dark:text-amber-400">
+						This return requires Kathy&apos;s review before proceeding.
+					</span>
+				</div>
+			)}
+
 			{/* Top Detail Sections */}
 			<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 				{/* Return Details */}
@@ -247,7 +279,14 @@ export default function TaxReturnDetailView({
 							/>
 							<DetailField
 								label="Complexity"
-								value={<Badge variant="outline">{taxReturn.complexity}</Badge>}
+								value={
+									<Badge
+										variant="outline"
+										className={getComplexityBadgeClasses(taxReturn.complexity)}
+									>
+										{taxReturn.complexity}
+									</Badge>
+								}
 							/>
 							<DetailField
 								label="Intake Method"
@@ -392,9 +431,9 @@ export default function TaxReturnDetailView({
 									<Line
 										type="monotone"
 										dataKey="days"
-										stroke="hsl(var(--chart-1))"
+										stroke="var(--chart-1)"
 										strokeWidth={2}
-										dot={{ r: 3, fill: "hsl(var(--chart-1))" }}
+										dot={{ r: 3, fill: "var(--chart-1)" }}
 									/>
 								</LineChart>
 							</ChartContainer>
@@ -442,7 +481,7 @@ export default function TaxReturnDetailView({
 									<Bar
 										dataKey="pending"
 										stackId="a"
-										fill="hsl(var(--chart-4))"
+										fill="var(--chart-4)"
 										radius={[4, 4, 0, 0]}
 									/>
 								</BarChart>

@@ -14,7 +14,18 @@ import {
 	ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import { AlertCircle, CheckCircle2, Clock, Inbox } from "lucide-react";
+import {
+	AlertCircle,
+	CheckCircle2,
+	Clock,
+	FileText,
+	Globe,
+	Inbox,
+	Mail,
+	MessageCircle,
+	Phone,
+	UserCheck,
+} from "lucide-react";
 import {
 	Bar,
 	BarChart,
@@ -25,6 +36,7 @@ import {
 	YAxis,
 } from "recharts";
 import { mockRequests } from "../data/mock-data";
+import type { RequestSourceChannel } from "../types";
 
 function computeKpis() {
 	const openCount = mockRequests.filter(
@@ -49,11 +61,11 @@ function computeKpis() {
 
 function computeStatusDistribution() {
 	const statusColors: Record<string, string> = {
-		New: "hsl(var(--chart-1))",
-		Triaged: "hsl(var(--chart-2))",
-		"In Progress": "hsl(var(--chart-3))",
-		"Waiting on Client": "hsl(var(--chart-4))",
-		"Won't Do": "hsl(var(--chart-5))",
+		New: "var(--chart-1)",
+		Triaged: "var(--chart-2)",
+		"In Progress": "var(--chart-3)",
+		"Waiting on Client": "var(--chart-4)",
+		"Won't Do": "var(--chart-5)",
 		Resolved: "hsl(142 76% 36%)",
 	};
 
@@ -65,7 +77,7 @@ function computeStatusDistribution() {
 	return Object.entries(statusCounts).map(([status, count]) => ({
 		status,
 		count,
-		fill: statusColors[status] || "hsl(var(--chart-1))",
+		fill: statusColors[status] || "var(--chart-1)",
 	}));
 }
 
@@ -124,29 +136,78 @@ function computeWeeklyTrend() {
 		});
 }
 
+interface ChannelBreakdownItem {
+	channel: RequestSourceChannel;
+	label: string;
+	count: number;
+}
+
+function getChannelIcon(channel: RequestSourceChannel) {
+	const iconClass = "h-4 w-4 text-muted-foreground";
+	switch (channel) {
+		case "tax_dome":
+			return <FileText className={iconClass} />;
+		case "email":
+			return <Mail className={iconClass} />;
+		case "phone":
+			return <Phone className={iconClass} />;
+		case "whatsapp":
+			return <MessageCircle className={iconClass} />;
+		case "website":
+			return <Globe className={iconClass} />;
+		case "in_person":
+			return <UserCheck className={iconClass} />;
+	}
+}
+
+const channelLabels: Record<RequestSourceChannel, string> = {
+	tax_dome: "Tax Dome",
+	email: "Email",
+	phone: "Phone",
+	whatsapp: "WhatsApp",
+	website: "Website",
+	in_person: "In Person",
+};
+
+function computeChannelDistribution(): ChannelBreakdownItem[] {
+	const channelCounts: Record<string, number> = {};
+	for (const req of mockRequests) {
+		channelCounts[req.sourceChannel] =
+			(channelCounts[req.sourceChannel] || 0) + 1;
+	}
+
+	return Object.entries(channelCounts)
+		.map(([channel, count]) => ({
+			channel: channel as RequestSourceChannel,
+			label: channelLabels[channel as RequestSourceChannel],
+			count,
+		}))
+		.sort((a, b) => b.count - a.count);
+}
+
 const statusChartConfig: ChartConfig = {
 	count: {
 		label: "Requests",
 	},
 	New: {
 		label: "New",
-		color: "hsl(var(--chart-1))",
+		color: "var(--chart-1)",
 	},
 	Triaged: {
 		label: "Triaged",
-		color: "hsl(var(--chart-2))",
+		color: "var(--chart-2)",
 	},
 	"In Progress": {
 		label: "In Progress",
-		color: "hsl(var(--chart-3))",
+		color: "var(--chart-3)",
 	},
 	"Waiting on Client": {
 		label: "Waiting on Client",
-		color: "hsl(var(--chart-4))",
+		color: "var(--chart-4)",
 	},
 	"Won't Do": {
 		label: "Won't Do",
-		color: "hsl(var(--chart-5))",
+		color: "var(--chart-5)",
 	},
 	Resolved: {
 		label: "Resolved",
@@ -157,7 +218,7 @@ const statusChartConfig: ChartConfig = {
 const trendChartConfig: ChartConfig = {
 	count: {
 		label: "New Requests",
-		color: "hsl(var(--chart-1))",
+		color: "var(--chart-1)",
 	},
 };
 
@@ -165,6 +226,7 @@ export default function RequestKpis() {
 	const { openCount, urgentCount, resolvedCount, totalCount } = computeKpis();
 	const statusData = computeStatusDistribution();
 	const trendData = computeWeeklyTrend();
+	const channelData = computeChannelDistribution();
 
 	return (
 		<div className="space-y-4">
@@ -312,6 +374,36 @@ export default function RequestKpis() {
 					</CardContent>
 				</Card>
 			</div>
+
+			{/* Requests by Channel */}
+			<Card>
+				<CardHeader>
+					<CardTitle className="text-sm">Requests by Channel</CardTitle>
+					<CardDescription className="text-xs">
+						Breakdown of requests by source channel
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+						{channelData.map((item) => (
+							<div
+								key={item.channel}
+								className="flex items-center gap-2 rounded-lg border p-3"
+							>
+								<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-muted">
+									{getChannelIcon(item.channel)}
+								</div>
+								<div>
+									<p className="font-medium text-muted-foreground text-xs">
+										{item.label}
+									</p>
+									<p className="font-bold text-lg">{item.count}</p>
+								</div>
+							</div>
+						))}
+					</div>
+				</CardContent>
+			</Card>
 		</div>
 	);
 }

@@ -54,14 +54,14 @@ interface AdvisoryDetailViewProps {
 const durationChartConfig = {
 	avgDays: {
 		label: "Avg Days",
-		color: "hsl(var(--chart-1))",
+		color: "var(--chart-1)",
 	},
 } satisfies ChartConfig;
 
 const revenueTypeChartConfig = {
 	revenue: {
 		label: "Revenue",
-		color: "hsl(var(--chart-2))",
+		color: "var(--chart-2)",
 	},
 } satisfies ChartConfig;
 

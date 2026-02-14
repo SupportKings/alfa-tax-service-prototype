@@ -16,6 +16,14 @@ export type RequestSource =
 	| "Website"
 	| "Walk-In";
 
+export type RequestSourceChannel =
+	| "tax_dome"
+	| "email"
+	| "phone"
+	| "whatsapp"
+	| "website"
+	| "in_person";
+
 export type RequestPriority = "Low" | "Normal" | "Urgent";
 
 export type RequestStatus =
@@ -43,6 +51,7 @@ export interface Request {
 	description: string;
 	requestType: RequestType;
 	source: RequestSource;
+	sourceChannel: RequestSourceChannel;
 	priority: RequestPriority;
 	status: RequestStatus;
 	assignedTo: string;

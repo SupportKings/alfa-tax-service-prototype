@@ -13,9 +13,10 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 
-import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, Crown } from "lucide-react";
 import type {
 	TaxReturn,
+	TaxReturnComplexity,
 	TaxReturnFilterState,
 	TaxReturnStatus,
 } from "../types";
@@ -59,14 +60,14 @@ function getStatusBadgeClasses(status: TaxReturnStatus): string {
 	}
 }
 
-function getComplexityBadgeClasses(complexity: string): string {
+function getComplexityBadgeClasses(complexity: TaxReturnComplexity): string {
 	switch (complexity) {
 		case "Simple":
-			return "bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-900 dark:text-slate-400 dark:border-slate-700";
+			return "bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-300 dark:border-green-800";
 		case "Standard":
-			return "bg-indigo-50 text-indigo-600 border-indigo-200 dark:bg-indigo-950 dark:text-indigo-400 dark:border-indigo-800";
+			return "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800";
 		case "Complex":
-			return "bg-red-50 text-red-600 border-red-200 dark:bg-red-950 dark:text-red-400 dark:border-red-800";
+			return "bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800";
 		default:
 			return "";
 	}
@@ -300,16 +301,26 @@ export default function TaxReturnsTable({
 								</Link>
 							</TableCell>
 							<TableCell>
-								<div className="flex flex-col">
-									<Link
-										href={`/dashboard/clients/${item.clientId}`}
-										className="font-medium text-xs hover:underline"
-									>
-										{item.clientName}
-									</Link>
-									<span className="text-[11px] text-muted-foreground">
-										{item.clientType}
-									</span>
+								<div className="flex items-center gap-1.5">
+									<div className="flex flex-col">
+										<Link
+											href={`/dashboard/clients/${item.clientId}`}
+											className="font-medium text-xs hover:underline"
+										>
+											{item.clientName}
+										</Link>
+										<span className="text-[11px] text-muted-foreground">
+											{item.clientType}
+										</span>
+									</div>
+									{item.pendingKathyReview && (
+										<span
+											className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900"
+											title="Pending Owner Review"
+										>
+											<Crown className="h-3 w-3 text-amber-600 dark:text-amber-400" />
+										</span>
+									)}
 								</div>
 							</TableCell>
 							<TableCell className="text-xs">{item.taxYear}</TableCell>

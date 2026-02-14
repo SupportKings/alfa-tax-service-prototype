@@ -29,8 +29,11 @@ import {
 	ArrowRight,
 	Briefcase,
 	Building2,
+	Calendar,
 	ClipboardList,
+	Clock,
 	CreditCard,
+	Crown,
 	FileText,
 	MessageSquare,
 	TrendingUp,
@@ -161,6 +164,332 @@ const quickLinks: QuickLinkData[] = [
 ];
 
 // ============================
+// Action Center: Kathy's Queue
+// ============================
+
+interface QueueItem {
+	id: string;
+	clientName: string;
+	description: string;
+	category: "Tax Returns" | "Advisory" | "Requests";
+	daysWaiting: number;
+	urgency: "normal" | "high" | "critical";
+}
+
+const kathysQueue: QueueItem[] = [
+	// Tax Returns in "In Review" status where Kathy is reviewer
+	{
+		id: "kq-1",
+		clientName: "Lone Star Ecommerce Group",
+		description: "Business Return (Complex) -- In Review",
+		category: "Tax Returns",
+		daysWaiting: 4,
+		urgency: "high",
+	},
+	{
+		id: "kq-2",
+		clientName: "Kevin O'Brien",
+		description: "Individual Return (Simple) -- In Review",
+		category: "Tax Returns",
+		daysWaiting: 3,
+		urgency: "normal",
+	},
+	{
+		id: "kq-3",
+		clientName: "Precision CNC Manufacturing",
+		description: "Business Return (Complex) -- In Review",
+		category: "Tax Returns",
+		daysWaiting: 4,
+		urgency: "high",
+	},
+	{
+		id: "kq-4",
+		clientName: "SA Builders Inc.",
+		description: "Sales Tax Return -- Ready to File",
+		category: "Tax Returns",
+		daysWaiting: 5,
+		urgency: "normal",
+	},
+	{
+		id: "kq-5",
+		clientName: "Laura Sanchez",
+		description: "Individual Return (Simple) -- Ready to File",
+		category: "Tax Returns",
+		daysWaiting: 3,
+		urgency: "normal",
+	},
+	// Advisory engagements needing Kathy's action
+	{
+		id: "kq-6",
+		clientName: "Alamo City Ecommerce Group",
+		description: "Financial Management -- Analysis phase",
+		category: "Advisory",
+		daysWaiting: 12,
+		urgency: "critical",
+	},
+	{
+		id: "kq-7",
+		clientName: "Tex-Mex Ventures LLC",
+		description: "Tax Plan + Books -- Analysis phase",
+		category: "Advisory",
+		daysWaiting: 10,
+		urgency: "high",
+	},
+	{
+		id: "kq-8",
+		clientName: "Roberto Salazar",
+		description: "Tax Plan -- Presentation scheduled",
+		category: "Advisory",
+		daysWaiting: 6,
+		urgency: "normal",
+	},
+	{
+		id: "kq-9",
+		clientName: "Riverwalk Professional Services LLC",
+		description: "Financial Management -- Presentation scheduled",
+		category: "Advisory",
+		daysWaiting: 8,
+		urgency: "high",
+	},
+	// Requests assigned to Kathy
+	{
+		id: "kq-10",
+		clientName: "Rosa Delgado",
+		description: "Divorce tax advice -- Escalation",
+		category: "Requests",
+		daysWaiting: 23,
+		urgency: "critical",
+	},
+	{
+		id: "kq-11",
+		clientName: "Marcus Williams",
+		description: "IRS payment plan -- Escalation",
+		category: "Requests",
+		daysWaiting: 4,
+		urgency: "high",
+	},
+	{
+		id: "kq-12",
+		clientName: "James O'Brien",
+		description: "CP2000 IRS notice -- Escalation",
+		category: "Requests",
+		daysWaiting: 7,
+		urgency: "critical",
+	},
+	{
+		id: "kq-13",
+		clientName: "Victoria Reeves",
+		description: "Wrong SSN on filed return -- Internal Discovery",
+		category: "Requests",
+		daysWaiting: 5,
+		urgency: "critical",
+	},
+	{
+		id: "kq-14",
+		clientName: "Horizon Auto Parts LLC",
+		description: "Books not reconciled -- Internal Discovery",
+		category: "Requests",
+		daysWaiting: 9,
+		urgency: "high",
+	},
+	{
+		id: "kq-15",
+		clientName: "Ricardo Fuentes",
+		description: "LLC formation inquiry -- Triaged",
+		category: "Requests",
+		daysWaiting: 2,
+		urgency: "normal",
+	},
+];
+
+const queueByCategory = {
+	"Tax Returns": kathysQueue.filter((q) => q.category === "Tax Returns"),
+	Advisory: kathysQueue.filter((q) => q.category === "Advisory"),
+	Requests: kathysQueue.filter((q) => q.category === "Requests"),
+};
+
+// ============================
+// Action Center: Stale Items
+// ============================
+
+interface StaleItem {
+	id: string;
+	itemName: string;
+	currentStage: string;
+	daysStuck: number;
+	featureType: "Tax Return" | "Advisory" | "Request" | "Formation";
+}
+
+const staleItems: StaleItem[] = (
+	[
+		{
+			id: "stale-1",
+			itemName: "Roberto Villarreal",
+			currentStage: "Waiting on Client",
+			daysStuck: 9,
+			featureType: "Tax Return" as const,
+		},
+		{
+			id: "stale-2",
+			itemName: "Ricardo and Ana Castillo",
+			currentStage: "Waiting on Client",
+			daysStuck: 10,
+			featureType: "Tax Return" as const,
+		},
+		{
+			id: "stale-3",
+			itemName: "Rosa Delgado (Divorce Advice)",
+			currentStage: "In Progress",
+			daysStuck: 23,
+			featureType: "Request" as const,
+		},
+		{
+			id: "stale-4",
+			itemName: "Alamo City Ecommerce Group",
+			currentStage: "Analysis",
+			daysStuck: 18,
+			featureType: "Advisory" as const,
+		},
+		{
+			id: "stale-5",
+			itemName: "Hill Country Plumbing LLC",
+			currentStage: "Documents Gathering",
+			daysStuck: 12,
+			featureType: "Tax Return" as const,
+		},
+		{
+			id: "stale-6",
+			itemName: "Rosa Gutierrez",
+			currentStage: "Documents Gathering",
+			daysStuck: 8,
+			featureType: "Tax Return" as const,
+		},
+		{
+			id: "stale-7",
+			itemName: "Patricia Morales (Missing W-2)",
+			currentStage: "Waiting on Client",
+			daysStuck: 9,
+			featureType: "Request" as const,
+		},
+		{
+			id: "stale-8",
+			itemName: "Francisco & Lucia Ramirez",
+			currentStage: "Info Gathering",
+			daysStuck: 15,
+			featureType: "Formation" as const,
+		},
+	] satisfies StaleItem[]
+).sort((a, b) => b.daysStuck - a.daysStuck);
+
+// ============================
+// Action Center: Upcoming Deadlines
+// ============================
+
+interface UpcomingDeadline {
+	id: string;
+	title: string;
+	dueDate: string;
+	description: string;
+	isClientSpecific: boolean;
+}
+
+const TODAY = new Date("2026-02-14");
+
+const upcomingDeadlines: UpcomingDeadline[] = [
+	{
+		id: "dl-1",
+		title: "S-Corp/Partnership Returns (1065/1120-S)",
+		dueDate: "2026-03-16",
+		description: "Federal due date for partnership and S-Corp returns",
+		isClientSpecific: false,
+	},
+	{
+		id: "dl-2",
+		title: "Individual Tax Returns (Form 1040)",
+		dueDate: "2026-04-15",
+		description: "Federal due date for individual tax returns",
+		isClientSpecific: false,
+	},
+	{
+		id: "dl-3",
+		title: "C-Corp Returns (Form 1120)",
+		dueDate: "2026-04-15",
+		description: "Federal due date for C-Corporation returns",
+		isClientSpecific: false,
+	},
+	{
+		id: "dl-4",
+		title: "Q1 Estimated Tax Payments",
+		dueDate: "2026-04-15",
+		description: "Quarterly estimated tax payments for self-employed clients",
+		isClientSpecific: false,
+	},
+	{
+		id: "dl-5",
+		title: "TX Sales Tax -- SA Builders Inc.",
+		dueDate: "2026-04-20",
+		description: "Q4 2025 sales tax filing",
+		isClientSpecific: true,
+	},
+	{
+		id: "dl-6",
+		title: "TX Sales Tax -- Tejano Electric Inc.",
+		dueDate: "2026-04-20",
+		description: "Q4 2025 sales tax filing",
+		isClientSpecific: true,
+	},
+	{
+		id: "dl-7",
+		title: "Extension Deadline (Form 4868)",
+		dueDate: "2026-10-15",
+		description: "Extended filing deadline for individual returns",
+		isClientSpecific: false,
+	},
+].sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
+
+function getDaysUntil(dateStr: string): number {
+	const target = new Date(dateStr);
+	const diffMs = target.getTime() - TODAY.getTime();
+	return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+}
+
+function getDeadlineColor(daysUntil: number): string {
+	if (daysUntil < 0) return "text-red-600 dark:text-red-400 font-semibold";
+	if (daysUntil <= 14) return "text-red-600 dark:text-red-400";
+	if (daysUntil <= 30) return "text-amber-600 dark:text-amber-400";
+	return "text-muted-foreground";
+}
+
+function getDeadlineLabel(daysUntil: number): string {
+	if (daysUntil < 0) return `${Math.abs(daysUntil)} days overdue`;
+	if (daysUntil === 0) return "Due today";
+	if (daysUntil === 1) return "Due tomorrow";
+	return `In ${daysUntil} days`;
+}
+
+function getUrgencyColor(urgency: "normal" | "high" | "critical"): string {
+	switch (urgency) {
+		case "critical":
+			return "text-red-600 dark:text-red-400";
+		case "high":
+			return "text-amber-600 dark:text-amber-400";
+		default:
+			return "text-muted-foreground";
+	}
+}
+
+function getStaleColor(daysStuck: number): string {
+	if (daysStuck >= 14) return "text-red-600 dark:text-red-400 font-semibold";
+	return "text-amber-600 dark:text-amber-400 font-medium";
+}
+
+function getStaleBg(daysStuck: number): string {
+	if (daysStuck >= 14)
+		return "border-l-2 border-l-red-500 dark:border-l-red-400";
+	return "border-l-2 border-l-amber-500 dark:border-l-amber-400";
+}
+
+// ============================
 // Helper: Priority color
 // ============================
 
@@ -200,9 +529,7 @@ export default function DashboardOverview() {
 		<div className="space-y-6 p-6">
 			{/* Welcome Section */}
 			<div className="space-y-1">
-				<h1 className="font-bold text-2xl text-foreground">
-					Welcome back, Kathy
-				</h1>
+				<h1 className="font-bold text-2xl text-foreground">Welcome!</h1>
 				<p className="text-muted-foreground text-sm">
 					Here is your business at a glance.
 				</p>
@@ -552,6 +879,246 @@ export default function DashboardOverview() {
 						</Link>
 					</CardContent>
 				</Card>
+			</div>
+
+			{/* ============================== */}
+			{/* Action Center */}
+			{/* ============================== */}
+			<div className="space-y-4">
+				<div className="space-y-1">
+					<h2 className="font-semibold text-foreground text-lg">
+						Action Center
+					</h2>
+					<p className="text-muted-foreground text-xs">
+						Items that need your attention right now.
+					</p>
+				</div>
+
+				{/* Widget 1: Owner Review Queue (full width) */}
+				<Card className="border-primary/20">
+					<CardHeader>
+						<div className="flex items-center justify-between">
+							<div className="flex items-center gap-2">
+								<Crown className="h-5 w-5 text-amber-500" />
+								<CardTitle className="text-base">Owner Review Queue</CardTitle>
+							</div>
+							<Badge variant="default" className="text-sm">
+								{kathysQueue.length} items
+							</Badge>
+						</div>
+						<CardDescription className="text-xs">
+							All items across features waiting on your review or action
+						</CardDescription>
+					</CardHeader>
+					<CardContent className="space-y-5">
+						{/* Tax Returns Group */}
+						<div className="space-y-2">
+							<div className="flex items-center gap-2">
+								<FileText className="h-4 w-4 text-muted-foreground" />
+								<span className="font-medium text-foreground text-sm">
+									Tax Returns
+								</span>
+								<Badge variant="secondary" className="text-[10px]">
+									{queueByCategory["Tax Returns"].length}
+								</Badge>
+							</div>
+							<div className="grid grid-cols-1 gap-1.5 pl-6 lg:grid-cols-2">
+								{queueByCategory["Tax Returns"].map((item) => (
+									<div
+										key={item.id}
+										className="flex items-center justify-between gap-2 rounded-md bg-muted/40 px-3 py-2"
+									>
+										<div className="min-w-0 flex-1">
+											<p className="truncate font-medium text-foreground text-sm">
+												{item.clientName}
+											</p>
+											<p className="truncate text-muted-foreground text-xs">
+												{item.description}
+											</p>
+										</div>
+										<span
+											className={`shrink-0 text-xs ${getUrgencyColor(item.urgency)}`}
+										>
+											{item.daysWaiting}d
+										</span>
+									</div>
+								))}
+							</div>
+						</div>
+
+						{/* Advisory Group */}
+						<div className="space-y-2">
+							<div className="flex items-center gap-2">
+								<TrendingUp className="h-4 w-4 text-muted-foreground" />
+								<span className="font-medium text-foreground text-sm">
+									Advisory
+								</span>
+								<Badge variant="secondary" className="text-[10px]">
+									{queueByCategory.Advisory.length}
+								</Badge>
+							</div>
+							<div className="grid grid-cols-1 gap-1.5 pl-6 lg:grid-cols-2">
+								{queueByCategory.Advisory.map((item) => (
+									<div
+										key={item.id}
+										className="flex items-center justify-between gap-2 rounded-md bg-muted/40 px-3 py-2"
+									>
+										<div className="min-w-0 flex-1">
+											<p className="truncate font-medium text-foreground text-sm">
+												{item.clientName}
+											</p>
+											<p className="truncate text-muted-foreground text-xs">
+												{item.description}
+											</p>
+										</div>
+										<span
+											className={`shrink-0 text-xs ${getUrgencyColor(item.urgency)}`}
+										>
+											{item.daysWaiting}d
+										</span>
+									</div>
+								))}
+							</div>
+						</div>
+
+						{/* Requests Group */}
+						<div className="space-y-2">
+							<div className="flex items-center gap-2">
+								<MessageSquare className="h-4 w-4 text-muted-foreground" />
+								<span className="font-medium text-foreground text-sm">
+									Requests
+								</span>
+								<Badge variant="secondary" className="text-[10px]">
+									{queueByCategory.Requests.length}
+								</Badge>
+							</div>
+							<div className="grid grid-cols-1 gap-1.5 pl-6 lg:grid-cols-2">
+								{queueByCategory.Requests.map((item) => (
+									<div
+										key={item.id}
+										className="flex items-center justify-between gap-2 rounded-md bg-muted/40 px-3 py-2"
+									>
+										<div className="min-w-0 flex-1">
+											<p className="truncate font-medium text-foreground text-sm">
+												{item.clientName}
+											</p>
+											<p className="truncate text-muted-foreground text-xs">
+												{item.description}
+											</p>
+										</div>
+										<span
+											className={`shrink-0 text-xs ${getUrgencyColor(item.urgency)}`}
+										>
+											{item.daysWaiting}d
+										</span>
+									</div>
+								))}
+							</div>
+						</div>
+					</CardContent>
+				</Card>
+
+				{/* Widget 2 & 3 side by side */}
+				<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+					{/* Widget 2: Stale Items Alert */}
+					<Card className="border-amber-200 dark:border-amber-900">
+						<CardHeader>
+							<div className="flex items-center gap-2">
+								<Clock className="h-5 w-5 text-amber-500" />
+								<CardTitle className="text-base">Stale Items</CardTitle>
+							</div>
+							<CardDescription className="text-xs">
+								Items stuck in the same stage for 7+ days
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<div className="space-y-2">
+								{staleItems.map((item) => (
+									<div
+										key={item.id}
+										className={`rounded-md bg-muted/30 px-3 py-2 ${getStaleBg(item.daysStuck)}`}
+									>
+										<div className="flex items-center justify-between gap-2">
+											<p className="truncate font-medium text-foreground text-sm">
+												{item.itemName}
+											</p>
+											<span
+												className={`shrink-0 text-xs ${getStaleColor(item.daysStuck)}`}
+											>
+												{item.daysStuck} days
+											</span>
+										</div>
+										<div className="mt-0.5 flex items-center gap-2">
+											<span className="text-muted-foreground text-xs">
+												{item.currentStage}
+											</span>
+											<Badge variant="outline" className="h-4 text-[10px]">
+												{item.featureType}
+											</Badge>
+										</div>
+									</div>
+								))}
+							</div>
+						</CardContent>
+					</Card>
+
+					{/* Widget 3: Upcoming Deadlines */}
+					<Card>
+						<CardHeader>
+							<div className="flex items-center gap-2">
+								<Calendar className="h-5 w-5 text-blue-500" />
+								<CardTitle className="text-base">Upcoming Deadlines</CardTitle>
+							</div>
+							<CardDescription className="text-xs">
+								Tax filing and client-specific due dates
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<div className="space-y-2">
+								{upcomingDeadlines.map((deadline) => {
+									const daysUntil = getDaysUntil(deadline.dueDate);
+									return (
+										<div
+											key={deadline.id}
+											className="flex items-center justify-between gap-3 rounded-md bg-muted/30 px-3 py-2"
+										>
+											<div className="min-w-0 flex-1">
+												<div className="flex items-center gap-2">
+													<p className="truncate font-medium text-foreground text-sm">
+														{deadline.title}
+													</p>
+													{deadline.isClientSpecific && (
+														<Badge
+															variant="outline"
+															className="h-4 shrink-0 text-[10px]"
+														>
+															Client
+														</Badge>
+													)}
+												</div>
+												<p className="text-muted-foreground text-xs">
+													{new Date(deadline.dueDate).toLocaleDateString(
+														"en-US",
+														{
+															month: "short",
+															day: "numeric",
+															year: "numeric",
+														},
+													)}
+												</p>
+											</div>
+											<span
+												className={`shrink-0 text-xs ${getDeadlineColor(daysUntil)}`}
+											>
+												{getDeadlineLabel(daysUntil)}
+											</span>
+										</div>
+									);
+								})}
+							</div>
+						</CardContent>
+					</Card>
+				</div>
 			</div>
 
 			{/* Bottom Row: Quick Links */}

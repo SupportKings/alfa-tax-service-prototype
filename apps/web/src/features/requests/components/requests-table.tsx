@@ -18,14 +18,21 @@ import {
 	ArrowDown,
 	ArrowUp,
 	ArrowUpDown,
+	FileText,
 	Globe,
 	Mail,
 	MessageCircle,
 	Monitor,
 	Phone,
+	UserCheck,
 	UserRound,
 } from "lucide-react";
-import type { Request, RequestPriority, RequestSource } from "../types";
+import type {
+	Request,
+	RequestPriority,
+	RequestSource,
+	RequestSourceChannel,
+} from "../types";
 
 interface RequestsTableProps {
 	requests: Request[];
@@ -37,6 +44,7 @@ type SortField =
 	| "title"
 	| "requestType"
 	| "source"
+	| "sourceChannel"
 	| "priority"
 	| "status"
 	| "createdAt";
@@ -95,6 +103,41 @@ function getSourceIcon(source: RequestSource) {
 			return <Globe className={iconClass} />;
 		case "Walk-In":
 			return <UserRound className={iconClass} />;
+	}
+}
+
+function getChannelLabel(channel: RequestSourceChannel): string {
+	switch (channel) {
+		case "tax_dome":
+			return "Tax Dome";
+		case "email":
+			return "Email";
+		case "phone":
+			return "Phone";
+		case "whatsapp":
+			return "WhatsApp";
+		case "website":
+			return "Website";
+		case "in_person":
+			return "In Person";
+	}
+}
+
+function getChannelIcon(channel: RequestSourceChannel) {
+	const iconClass = "h-3.5 w-3.5 text-muted-foreground";
+	switch (channel) {
+		case "tax_dome":
+			return <FileText className={iconClass} />;
+		case "email":
+			return <Mail className={iconClass} />;
+		case "phone":
+			return <Phone className={iconClass} />;
+		case "whatsapp":
+			return <MessageCircle className={iconClass} />;
+		case "website":
+			return <Globe className={iconClass} />;
+		case "in_person":
+			return <UserCheck className={iconClass} />;
 	}
 }
 
@@ -157,6 +200,8 @@ export default function RequestsTable({ requests }: RequestsTableProps) {
 				return a.requestType.localeCompare(b.requestType) * direction;
 			case "source":
 				return a.source.localeCompare(b.source) * direction;
+			case "sourceChannel":
+				return a.sourceChannel.localeCompare(b.sourceChannel) * direction;
 			case "priority":
 				return (
 					(priorityOrder[a.priority] - priorityOrder[b.priority]) * direction
@@ -254,6 +299,20 @@ export default function RequestsTable({ requests }: RequestsTableProps) {
 						<button
 							type="button"
 							className="flex items-center text-xs hover:text-foreground"
+							onClick={() => handleSort("sourceChannel")}
+						>
+							Channel
+							<SortIcon
+								field="sourceChannel"
+								currentSortField={sortField}
+								currentSortDirection={sortDirection}
+							/>
+						</button>
+					</TableHead>
+					<TableHead>
+						<button
+							type="button"
+							className="flex items-center text-xs hover:text-foreground"
 							onClick={() => handleSort("priority")}
 						>
 							Priority
@@ -298,7 +357,7 @@ export default function RequestsTable({ requests }: RequestsTableProps) {
 				{sortedRequests.length === 0 ? (
 					<TableRow>
 						<TableCell
-							colSpan={8}
+							colSpan={9}
 							className="py-8 text-center text-muted-foreground"
 						>
 							No requests match the current filters.
@@ -335,6 +394,14 @@ export default function RequestsTable({ requests }: RequestsTableProps) {
 								<div className="flex items-center gap-1.5">
 									{getSourceIcon(request.source)}
 									<span className="text-xs">{request.source}</span>
+								</div>
+							</TableCell>
+							<TableCell>
+								<div className="flex items-center gap-1.5">
+									{getChannelIcon(request.sourceChannel)}
+									<span className="text-xs">
+										{getChannelLabel(request.sourceChannel)}
+									</span>
 								</div>
 							</TableCell>
 							<TableCell>{getPriorityBadge(request.priority)}</TableCell>

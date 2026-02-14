@@ -10,6 +10,8 @@ export interface Client {
 	status: ClientStatus;
 	client_type: ClientType;
 	quality: ClientQuality;
+	qualityScore: ClientQualityScore;
+	avgResponseDays: number;
 	language: LanguagePreference;
 	source: ClientSource;
 	// Business Details
@@ -34,6 +36,7 @@ export type ClientStatus =
 	| "Churned";
 export type ClientType = "Individual" | "Business";
 export type ClientQuality = "Great" | "Good" | "Okay" | "Difficult";
+export type ClientQualityScore = "excellent" | "good" | "fair" | "poor";
 export type LanguagePreference = "English" | "Spanish" | "Both";
 export type ClientSource =
 	| "Referral"

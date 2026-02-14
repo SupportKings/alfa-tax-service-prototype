@@ -8,7 +8,13 @@ import {
 	SidebarMenu,
 } from "@/components/ui/sidebar";
 
-import { BarChart3, DollarSign, FolderOpen, Settings } from "lucide-react";
+import {
+	BarChart3,
+	DollarSign,
+	FolderOpen,
+	Settings,
+	UsersRound,
+} from "lucide-react";
 import { SidebarItemComponent } from "./sidebar-item";
 
 export function NavSecondary({
@@ -37,7 +43,12 @@ export function NavSecondary({
 						badge="Soon"
 					/>
 					<SidebarItemComponent
-						href="/dashboard/settings/team"
+						href="/dashboard/team-members"
+						label="Team"
+						icon={<UsersRound size={16} />}
+					/>
+					<SidebarItemComponent
+						href="/dashboard/settings/profile"
 						label="Settings"
 						icon={<Settings size={16} />}
 					/>

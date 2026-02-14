@@ -15,13 +15,14 @@ import {
 } from "@/components/ui/table";
 
 import { ArrowDown, ArrowUp, ArrowUpDown, Eye } from "lucide-react";
-import type { Client, ClientStatus } from "../types";
+import type { Client, ClientQualityScore, ClientStatus } from "../types";
 
 type SortField =
 	| "full_name"
 	| "status"
 	| "client_type"
 	| "quality"
+	| "qualityScore"
 	| "phone"
 	| "language"
 	| "source";
@@ -65,6 +66,27 @@ function getStatusColorScheme(
 		default:
 			return "green";
 	}
+}
+
+function getQualityScoreColorScheme(
+	score: ClientQualityScore,
+): "green" | "blue" | "yellow" | "red" {
+	switch (score) {
+		case "excellent":
+			return "green";
+		case "good":
+			return "blue";
+		case "fair":
+			return "yellow";
+		case "poor":
+			return "red";
+		default:
+			return "green";
+	}
+}
+
+function formatQualityScoreLabel(score: ClientQualityScore): string {
+	return score.charAt(0).toUpperCase() + score.slice(1);
 }
 
 function SortIcon({
@@ -162,6 +184,17 @@ export default function ClientsTable({ clients }: ClientsTableProps) {
 					</TableHead>
 					<TableHead
 						className="cursor-pointer select-none"
+						onClick={() => handleSort("qualityScore")}
+					>
+						Quality Score
+						<SortIcon
+							field="qualityScore"
+							activeField={sortField}
+							direction={sortDirection}
+						/>
+					</TableHead>
+					<TableHead
+						className="cursor-pointer select-none"
 						onClick={() => handleSort("phone")}
 					>
 						Phone
@@ -223,6 +256,18 @@ export default function ClientsTable({ clients }: ClientsTableProps) {
 							</Badge>
 						</TableCell>
 						<TableCell>
+							<div className="flex items-center gap-2">
+								<StatusBadge
+									colorScheme={getQualityScoreColorScheme(client.qualityScore)}
+								>
+									{formatQualityScoreLabel(client.qualityScore)}
+								</StatusBadge>
+								<span className="text-muted-foreground text-xs">
+									{client.avgResponseDays}d
+								</span>
+							</div>
+						</TableCell>
+						<TableCell>
 							<span className="font-mono text-muted-foreground text-sm">
 								{client.phone}
 							</span>
@@ -249,7 +294,7 @@ export default function ClientsTable({ clients }: ClientsTableProps) {
 				))}
 				{sortedClients.length === 0 && (
 					<TableRow>
-						<TableCell colSpan={8} className="py-8 text-center">
+						<TableCell colSpan={9} className="py-8 text-center">
 							<p className="text-muted-foreground text-sm">
 								No clients match your filters.
 							</p>

@@ -4,7 +4,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1001",
 		formationNumber: "BF-1001",
-		clientId: "client-001",
+		clientId: "c024",
 		clientName: "Roberto Garza",
 		requestingContact: "Roberto Garza",
 		requestingContactRole: "Self",
@@ -78,7 +78,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1002",
 		formationNumber: "BF-1002",
-		clientId: "client-002",
+		clientId: "c001",
 		clientName: "Maria Elena Salinas",
 		requestingContact: "Maria Elena Salinas",
 		requestingContactRole: "Self",
@@ -141,7 +141,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1003",
 		formationNumber: "BF-1003",
-		clientId: "client-003",
+		clientId: "c003",
 		clientName: "James & Patricia Thompson",
 		requestingContact: "James Thompson",
 		requestingContactRole: "Owner",
@@ -214,7 +214,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1004",
 		formationNumber: "BF-1004",
-		clientId: "client-004",
+		clientId: "c004",
 		clientName: "Carlos Hernandez",
 		requestingContact: "Carlos Hernandez",
 		requestingContactRole: "Self",
@@ -280,7 +280,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1005",
 		formationNumber: "BF-1005",
-		clientId: "client-005",
+		clientId: "c010",
 		clientName: "David & Lisa Nguyen",
 		requestingContact: "David Nguyen",
 		requestingContactRole: "Owner",
@@ -354,7 +354,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1006",
 		formationNumber: "BF-1006",
-		clientId: "client-006",
+		clientId: "c012",
 		clientName: "Angela Morales",
 		requestingContact: "Angela Morales",
 		requestingContactRole: "Self",
@@ -424,7 +424,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1007",
 		formationNumber: "BF-1007",
-		clientId: "client-007",
+		clientId: "c013",
 		clientName: "Michael & Sandra Perez",
 		requestingContact: "Michael Perez",
 		requestingContactRole: "Owner",
@@ -491,7 +491,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1008",
 		formationNumber: "BF-1008",
-		clientId: "client-008",
+		clientId: "c023",
 		clientName: "Rosa Linda Castillo",
 		requestingContact: "Rosa Linda Castillo",
 		requestingContactRole: "Self",
@@ -565,7 +565,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1009",
 		formationNumber: "BF-1009",
-		clientId: "client-009",
+		clientId: "c009",
 		clientName: "Anthony Williams",
 		requestingContact: "Anthony Williams",
 		requestingContactRole: "Self",
@@ -628,7 +628,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1010",
 		formationNumber: "BF-1010",
-		clientId: "client-010",
+		clientId: "c010",
 		clientName: "Francisco & Lucia Ramirez",
 		requestingContact: "Francisco Ramirez",
 		requestingContactRole: "Owner",
@@ -698,7 +698,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1011",
 		formationNumber: "BF-1011",
-		clientId: "client-011",
+		clientId: "c011",
 		clientName: "Jennifer O'Brien",
 		requestingContact: "Jennifer O'Brien",
 		requestingContactRole: "Self",
@@ -761,7 +761,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1012",
 		formationNumber: "BF-1012",
-		clientId: "client-012",
+		clientId: "c012",
 		clientName: "Ricardo Trevino",
 		requestingContact: "Ricardo Trevino",
 		requestingContactRole: "Self",
@@ -831,7 +831,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1013",
 		formationNumber: "BF-1013",
-		clientId: "client-013",
+		clientId: "c013",
 		clientName: "Samantha Cruz",
 		requestingContact: "Samantha Cruz",
 		requestingContactRole: "Self",
@@ -894,7 +894,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1014",
 		formationNumber: "BF-1014",
-		clientId: "client-014",
+		clientId: "c014",
 		clientName: "Daniel & Priya Patel",
 		requestingContact: "Daniel Patel",
 		requestingContactRole: "Owner",
@@ -967,7 +967,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1015",
 		formationNumber: "BF-1015",
-		clientId: "client-015",
+		clientId: "c015",
 		clientName: "Marcus Johnson",
 		requestingContact: "Marcus Johnson",
 		requestingContactRole: "Self",
@@ -1030,7 +1030,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1016",
 		formationNumber: "BF-1016",
-		clientId: "client-016",
+		clientId: "c016",
 		clientName: "Sofia Gutierrez",
 		requestingContact: "Sofia Gutierrez",
 		requestingContactRole: "Self",
@@ -1104,7 +1104,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1017",
 		formationNumber: "BF-1017",
-		clientId: "client-017",
+		clientId: "c017",
 		clientName: "Kevin & Amanda Brooks",
 		requestingContact: "Kevin Brooks",
 		requestingContactRole: "Owner",
@@ -1167,7 +1167,7 @@ export const mockFormations: BusinessFormation[] = [
 	{
 		id: "bf-1018",
 		formationNumber: "BF-1018",
-		clientId: "client-018",
+		clientId: "c018",
 		clientName: "Eduardo Vega",
 		requestingContact: "Eduardo Vega",
 		requestingContactRole: "Self",
