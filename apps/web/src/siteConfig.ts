@@ -1,9 +1,9 @@
 export const siteConfig = {
-	name: "OpsKings Operating System",
+	name: "Alfa Tax Services Operating System",
 	logo: {
 		// Path to your logo files (relative to public folder)
 		light: "/logo.png", // Light mode logo
-		dark: "/logo_dark.png", // Dark mode logo
+		dark: "/logo.png", // Dark mode logo
 		src: "/logo.png", // Fallback for backward compatibility
 	},
 	email: {

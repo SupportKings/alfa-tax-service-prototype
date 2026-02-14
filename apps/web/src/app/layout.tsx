@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "OpsKings",
-	description: "OpsOS Template",
+	title: "Alfa Tax Services",
+	description: "Alfa Tax Services Operating System",
 };
 
 export default function RootLayout({
