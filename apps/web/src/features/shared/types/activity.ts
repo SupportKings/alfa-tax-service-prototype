@@ -1,7 +1,7 @@
 import type { Database } from "@/utils/supabase/database.types";
 
 // Base audit log type with user information
-// @ts-expect-error Template build - audit_log table will be created when feature is implemented
+// @ts-expect-error Template build - audit_log table may not exist yet
 export type AuditLog = Database["public"]["Tables"]["audit_log"]["Row"] & {
 	changed_by_user: {
 		id: string;
@@ -12,8 +12,8 @@ export type AuditLog = Database["public"]["Tables"]["audit_log"]["Row"] & {
 };
 
 // Ticket comment type with user information
-// @ts-expect-error Template build - ticket_comments table will be created when feature is implemented
 export type TicketComment =
+	// @ts-expect-error Template build - ticket_comments table may not exist yet
 	Database["public"]["Tables"]["ticket_comments"]["Row"] & {
 		user: {
 			id: string;
@@ -24,8 +24,8 @@ export type TicketComment =
 	};
 
 // Coach comment type with user information
-// @ts-expect-error Template build - coach_comments table will be created when feature is implemented
 export type CoachComment =
+	// @ts-expect-error Template build - coach_comments table may not exist yet
 	Database["public"]["Tables"]["coach_comments"]["Row"] & {
 		user: {
 			id: string;
