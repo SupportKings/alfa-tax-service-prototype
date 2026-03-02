@@ -115,6 +115,10 @@ export function AppSidebar({
 						title: "Clients",
 						url: "/dashboard/clients",
 					},
+					{
+						title: "Intakes",
+						url: "/dashboard/intakes",
+					},
 				],
 			},
 			{
