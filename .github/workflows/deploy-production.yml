@@ -61,7 +61,7 @@ jobs:
           scope: ${{ secrets.VERCEL_ORG_ID }}
 
       - name: Create deployment status
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const deployment = await github.rest.repos.createDeployment({
